@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './buttonStyle.css'
 
 const widgetUrl = 'https://plurality.westeurope.cloudapp.azure.com/auth-pages/login';
 
@@ -52,9 +53,7 @@ class PluralityPopupWidget extends Component {
     render() {
         return (
             <div>
-                <button onClick={this.openPluralityPopup}>
-                    Reputation Connect
-                </button>
+                <a href="#" class="btn-flip" onClick={this.openPluralityPopup} data-back="Connect" data-front="Reputation"></a>
             </div>
         );
     }
