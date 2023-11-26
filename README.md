@@ -34,4 +34,3 @@ const App = () => {
 - Run `npm run webpack` and verify the `./lib/PluralityPopupWidget.js` file if it is updated
 - Run `npm version` and verify if the version is updated correctly locally
 - Run `npm publish` to publish it to public npm registry
-
