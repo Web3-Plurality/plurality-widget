@@ -53,7 +53,7 @@ class PluralityPopupWidget extends Component {
     render() {
         return (
             <div>
-                <a href="#" class="btn-flip" onClick={this.openPluralityPopup} data-back="Connect" data-front="Reputation" style={{"--width": this.props.customization?.height || '40px', width: this.props.customization?.width }}></a>
+                <a href="#" class="btn-flip" onClick={this.openPluralityPopup} data-back="Reputation" data-front="Connect" style={{"--width": this.props.customization?.height || '40px', width: this.props.customization?.width }}></a>
             </div>
         );
     }
