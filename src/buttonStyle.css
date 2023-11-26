@@ -2,7 +2,7 @@
     opacity: 1;
     outline: 0;
     color: #fff;
-    line-height: 40px;
+    line-height: var(--width);
     position: relative;
     text-align: center;
     letter-spacing: 1px;
@@ -45,7 +45,7 @@
       color: #adadaf;
       display: block;
       padding: 0 30px;
-      line-height: 40px;
+      line-height: var(--width);
       transition: 0.5s;
       position: relative;
       background: #323237;
