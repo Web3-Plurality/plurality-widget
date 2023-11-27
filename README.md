@@ -10,6 +10,8 @@ yarn install && yarn start
 
 Here is a basic demo how it can be used in any react project
 ```
+import PluralityPopupWidget from 'web3-plurality-repconnect-widget';
+
 const App = () => {
     // Handle the data returned from the widget
     const handleDataReturned = (data) => {
@@ -23,6 +25,7 @@ const App = () => {
             <PluralityPopupWidget
                 options={{ apps: 'facebook,twitter' }}
                 onDataReturned={handleDataReturned}
+                customization={{ height: '200px', width: '500px'}} //optional
             />
         </div>
     );
