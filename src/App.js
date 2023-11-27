@@ -16,6 +16,7 @@ const App = () => {
             <PluralityPopupWidget
                 options={{ apps: 'facebook,twitter' }}
                 onDataReturned={handleDataReturned}
+                // customization={{ height: '200px', width: '500px'}}
             />
         </div>
     );

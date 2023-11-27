@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
+import './buttonStyle.css'
 
 const widgetUrl = 'https://plurality.westeurope.cloudapp.azure.com/auth-pages/login';
-
 class PluralityPopupWidget extends Component {
     constructor(props) {
         super(props);
@@ -35,10 +35,15 @@ class PluralityPopupWidget extends Component {
 
     receiveMessage = (event) => {
         const { onDataReturned } = this.props;
+        let parsedUrl = new URL(widgetUrl);
+        // If the URL has a port, include it in the result
+        const port = parsedUrl.port ? `:${parsedUrl.port}` : '';
 
-        if (event.origin === widgetUrl) {
+        parsedUrl = `${parsedUrl.protocol}//${parsedUrl.hostname}${port}`;
+        
+        if (event.origin === parsedUrl) {
             const data = event.data;
-            //console.log('Received data from opened window:', data);
+            console.log('Received data from opened window:', data);
             if (onDataReturned) {
                 onDataReturned(data);
             }
@@ -52,9 +57,7 @@ class PluralityPopupWidget extends Component {
     render() {
         return (
             <div>
-                <button onClick={this.openPluralityPopup}>
-                    Reputation Connect
-                </button>
+                <a href="#" class="btn-flip" onClick={this.openPluralityPopup} data-back="Reputation" data-front="Connect" style={{"--width": this.props.customization?.height || '40px', width: this.props.customization?.width }}></a>
             </div>
         );
     }
