@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import './buttonStyle.css'
 
 const widgetUrl = 'https://plurality.westeurope.cloudapp.azure.com/auth-pages/login';
+//const widgetUrl = 'http://localhost:3000/auth-pages/login';
+
 class PluralityPopupWidget extends Component {
     constructor(props) {
         super(props);
@@ -19,8 +21,10 @@ class PluralityPopupWidget extends Component {
 
         const width = 450;
         const height = 600;
-        const left = (window.innerWidth - width) / 2;
-        const top = (window.innerHeight - height) / 2;
+        //const left = (window.innerWidth - width) / 2;
+        //const top = (window.innerHeight - height) / 2;
+        const left = 500;
+        const top = 100;
 
         const pluralityPopup = window.open(url, 'PluralityPopup', `width=${width}, height=${height}, top=${top}, left=${left}`);
 
