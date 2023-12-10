@@ -1,3 +1,3 @@
 module.exports = {
-  branches: ['main', 'publish-npm-ghcr']
+  branches: ['main']
 };
