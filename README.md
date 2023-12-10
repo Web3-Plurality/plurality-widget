@@ -1,4 +1,4 @@
-# Plurality Reputation connect widget
+# Plurality Reputation Connect Widget
 This repo contains the functionality to load the plurality identity oracle as a popup widget.
 
 ## To run
@@ -10,7 +10,7 @@ yarn install && yarn start
 
 Here is a basic demo how it can be used in any react project
 ```
-import PluralityPopupWidget from 'web3-plurality-repconnect-widget';
+import PluralityPopupWidget from 'plurality-repconnect-widget';
 
 const App = () => {
     // Handle the data returned from the widget
@@ -37,3 +37,6 @@ const App = () => {
 - Run `npm run webpack` and verify the `./lib/PluralityPopupWidget.js` file if it is updated
 - Run `npm version` and verify if the version is updated correctly locally
 - Run `npm publish` to publish it to public npm registry
+
+## Release
+- The package is released on NPM registry via a build pipeline on merge to main
