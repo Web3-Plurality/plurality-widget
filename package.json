@@ -8,7 +8,9 @@
     "plurality",
     "reputation",
     "social",
-    "connect"
+    "connect",
+    "identity",
+    "zero-knowledge"
   ],
   "author": "Plurality",
   "license": "MIT",
