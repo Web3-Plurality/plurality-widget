@@ -10,7 +10,8 @@
     "social",
     "connect",
     "identity",
-    "zero-knowledge"
+    "zero-knowledge",
+    "did"
   ],
   "author": "Plurality",
   "license": "MIT",
