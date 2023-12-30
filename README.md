@@ -3,7 +3,7 @@ This repo contains the functionality to load the plurality identity oracle as a 
 
 ## To run
 ```
-yarn install && yarn start
+npm install && npm run start
 ```
 
 ## To use it in a react project
