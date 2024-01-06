@@ -1,6 +1,5 @@
 import React from 'react';
 import PluralityPopupWidget from './PluralityPopupWidget';
-//import PluralityPopupIframe from './PluralityPopupIframe';
 
 const App = () => {
     // Handle the data returned from the widget
@@ -16,7 +15,8 @@ const App = () => {
             <PluralityPopupWidget
                 options={{ apps: 'facebook,twitter' }}
                 onDataReturned={handleDataReturned}
-                // customization={{ height: '200px', width: '500px'}}
+                // all customization params are optional
+                // customization={{ height: '200px', width: '500px', initialBackgroundColor: '#E8A123', initialTextColor: '#FFFFFF', flipBackgroundColor: '#12AE83', flipTextColor: '#FFFFFF'}}
             />
         </div>
     );

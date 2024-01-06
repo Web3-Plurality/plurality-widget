@@ -25,7 +25,8 @@ const App = () => {
             <PluralityPopupWidget
                 options={{ apps: 'facebook,twitter' }}
                 onDataReturned={handleDataReturned}
-                customization={{ height: '200px', width: '500px'}} //optional
+                // all customization params are optional
+                // customization={{ height: '200px', width: '500px', initialBackgroundColor: '#E8A123', initialTextColor: '#FFFFFF', flipBackgroundColor: '#12AE83', flipTextColor: '#FFFFFF'}}
             />
         </div>
     );
@@ -38,5 +39,14 @@ const App = () => {
 - Run `npm version` and verify if the version is updated correctly locally
 - Run `npm publish` to publish it to public npm registry
 
+## Customizable attributes
+- ```height```: Specify the height of the button
+- ```width```: Specify the width of the button
+- ```initialBackgroundColor```: Specify the intial background color of the button
+- ```initialTextColor```: Specify the intial text color of the button
+- ```flipBackgroundColor```: Specify the flipped background color of the button
+- ```flipTextColor```: Specify the flipped text color of the button
+
 ## Release
 - The package is released on NPM registry via a build pipeline on merge to main
+
