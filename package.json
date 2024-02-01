@@ -1,6 +1,6 @@
 {
   "name": "plurality-repconnect-widget",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "A React component for social connect popup.",
   "main": "./lib/PluralityPopupWidget.js",
   "keywords": [
