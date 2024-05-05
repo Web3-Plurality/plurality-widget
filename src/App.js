@@ -1,58 +1,53 @@
 import React from 'react';
-import PluralityPopupWidget from './PluralityPopupWidget';
+import PluralityPopupIframe from './PluralityPopupIframe';
 
 
 const App = () => {
-
-    // Function to connect the wallet
-    const connectWallet = () => {
-        // Check if MetaMask is installed
-        if (window.ethereum) {
-            // Check if the user is connected
-            window.ethereum
-                .request({ method: 'eth_accounts' })
-                .then((accounts) => {
-                    if (accounts.length === 0) {
-                        // User is not connected, prompt to connect
-                        window.ethereum
-                            .request({ method: 'eth_requestAccounts' })
-                            .then((newAccounts) => {
-                                console.log('Wallet connected. New accounts:', newAccounts);
-                                // Proceed with actions using the connected wallet
-                                // ... (perform actions with the received data)
-                            })
-                            .catch((error) => {
-                                console.error('Error connecting wallet:', error);
-                            });
-                    }
-                })
-                .catch((error) => {
-                    console.error('Error checking wallet connection:', error);
-                });
-        } else {
-            console.log('MetaMask not installed. Please install MetaMask.');
-        }
-    };    
+    const iframeUrl= "http://localhost:3000";    
 
     // Handle the data returned from the widget
     const handleDataReturned = (data) => {
-        console.log('Received data from widget:', data);
+        alert('Received data from iframe:'+ data);
         // Handle the received data in the external webpage
         // ... (perform actions with the received data)
         // Call connectWallet to ensure the user is connected to the dapp
-        connectWallet();
+       // connectWallet();
     };
+
+    const sendMMAccountQuery = async () => {
+        const iframe = document.getElementById('iframe');
+        console.log(iframe);
+        // Send MetaMask-related request to the iframe
+        iframe.contentWindow.postMessage({ type: 'metamaskRequest', method: 'eth_requestAccounts' }, iframeUrl);
+    }
+
+    const sendMMSignQuery = async () => {
+        const iframe = document.getElementById('iframe');
+        console.log(iframe);
+        // Send MetaMask-related request to the iframe
+        iframe.contentWindow.postMessage({ type: 'metamaskRequest', method: 'personal_sign', message: "Example `personal_sign` message." }, iframeUrl);
+    }
+
+    const sendBalanceQuery = async () => {
+        const iframe = document.getElementById('iframe');
+        console.log(iframe);
+        // Send MetaMask-related request to the iframe
+        iframe.contentWindow.postMessage({ type: 'metamaskRequest', method: 'balance'}, iframeUrl);
+    }
 
     return (
         <div>
             {/* Render the widget component */}
-            <PluralityPopupWidget
-                options={{ apps: 'facebook,twitter' }}
-                //options={{ apps: 'twitter' }}
+            <PluralityPopupIframe
+                options={{ apps: 'facebook,twitter,lens' }}
                 onDataReturned={handleDataReturned}
-                // all customization params are optional
-                // customization={{ height: '200px', width: '500px', initialBackgroundColor: '#E8A123', initialTextColor: '#FFFFFF', flipBackgroundColor: '#12AE83', flipTextColor: '#FFFFFF'}}
             />
+            <button onClick={sendMMAccountQuery}>Send Metamask Account query</button>
+            <br/>
+            <button onClick={sendMMSignQuery}>Send Metamask Sign query</button>
+            <br/>
+            <button onClick={sendBalanceQuery}>Send Metamask Balance query</button>
+
         </div>
     );
 };
