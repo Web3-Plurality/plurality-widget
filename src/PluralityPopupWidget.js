@@ -60,7 +60,7 @@ class PluralityPopupWidget extends Component {
     render() {
         return (
             <div>
-                <a href="#" class="btn-flip" onClick={this.openPluralityPopup} data-back="Plurality" data-front="Connect" style={{"--height": this.props.customization?.height || '40px', 
+                <a href="#" class="btn-flip" onClick={this.openPluralityPopup} data-back="Social" data-front="Connect" style={{"--height": this.props.customization?.height || '40px', 
                 "--initialBackgroundColor": this.props.customization?.initialBackgroundColor || '#AE388B', "--initialTextColor": this.props.customization?.initialTextColor || '#ffffff', 
                 "--flipBackgroundColor": this.props.customization?.flipBackgroundColor || '#EFEBE0', 
                 "--flipTextColor": this.props.customization?.flipTextColor || '#AE388B',
