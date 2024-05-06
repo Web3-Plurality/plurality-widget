@@ -19,9 +19,7 @@ class PluralityPopup extends Component {
         const encodedApps = encodeURIComponent(options.apps);
         const currentUrl = encodeURIComponent(window.location.href); // Get current window URL
 
-        frameUrl = `${baseUrl}/auth-pages/login?isWidget=true&apps=${encodedApps}&origin=${currentUrl}&id_platform=none`;
-        console.log(frameUrl);
-        
+        frameUrl = `${baseUrl}/auth-pages/login?isWidget=true&apps=${encodedApps}&origin=${currentUrl}&id_platform=none`;        
     }
 
     openPluralityPopup = () => {
@@ -37,9 +35,8 @@ class PluralityPopup extends Component {
     receiveMessage = (event) => {
         const { onDataReturned } = this.props;
         if (event.origin === baseUrl) {
-            console.log("Received message from iframe: "+onDataReturned);
             const data = event.data;
-            console.log('Received data from opened window:', data);
+            //console.log('Received data from embedded popup:', data);
             if (onDataReturned) {
                 onDataReturned(data);
             }
