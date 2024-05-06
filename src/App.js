@@ -1,5 +1,5 @@
 import React from 'react';
-import PluralityPopupIframe from './PluralityPopupIframe';
+import PluralityPopup from './PluralityPopup';
 import { parseEther } from 'ethers';
 
 const App = () => {
@@ -10,8 +10,6 @@ const App = () => {
         alert('Received data from iframe:'+ data);
         // Handle the received data in the external webpage
         // ... (perform actions with the received data)
-        // Call connectWallet to ensure the user is connected to the dapp
-       // connectWallet();
     };
 
     const sendMMAccountQuery = async () => {
@@ -44,7 +42,7 @@ const App = () => {
     return (
         <div>
             {/* Render the widget component */}
-            <PluralityPopupIframe
+            <PluralityPopup
                 options={{ apps: 'facebook,twitter,lens' }}
                 onDataReturned={handleDataReturned}
             />
