@@ -1,6 +1,6 @@
 import React from 'react';
 import PluralityPopupIframe from './PluralityPopupIframe';
-
+import { parseEther } from 'ethers';
 
 const App = () => {
     const iframeUrl= "http://localhost:3000";    
@@ -32,9 +32,15 @@ const App = () => {
         const iframe = document.getElementById('iframe');
         console.log(iframe);
         // Send MetaMask-related request to the iframe
-        iframe.contentWindow.postMessage({ type: 'metamaskRequest', method: 'balance'}, iframeUrl);
+        iframe.contentWindow.postMessage({ type: 'metamaskRequest', method: 'getBalance'}, iframeUrl);
     }
 
+    const sendTransaction = async () => {
+        const iframe = document.getElementById('iframe');
+        console.log(iframe);
+        // Send MetaMask-related request to the iframe
+        iframe.contentWindow.postMessage({ type: 'metamaskRequest', method: 'sendTransaction', sendTo: "0xe613B4cd69Fe20E8bd0F0D79a264210886bA1AA2", value: parseEther("0.01")}, iframeUrl);
+    }
     return (
         <div>
             {/* Render the widget component */}
@@ -47,7 +53,8 @@ const App = () => {
             <button onClick={sendMMSignQuery}>Send Metamask Sign query</button>
             <br/>
             <button onClick={sendBalanceQuery}>Send Metamask Balance query</button>
-
+            <br/>
+            <button onClick={sendTransaction}>Send Metamask Transaction</button>
         </div>
     );
 };

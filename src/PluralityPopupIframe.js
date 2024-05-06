@@ -1,6 +1,10 @@
 import React, { useEffect, Component } from 'react';
 
 const widgetUrl = 'http://localhost:3000';
+const url = 'http://localhost:3000/auth-pages/login/?isWidget=true&apps=${encodedApps}&origin=${currentUrl}';
+const encodedApps = encodeURIComponent("facebook,twitter");
+const currentUrl = encodeURIComponent(window.location.href); // Get current window URL
+
 let style;
 let eventListenerAttached = false;
 
@@ -49,7 +53,7 @@ class PluralityPopupIframe extends Component {
                             <button onClick={this.closePopup}>Close</button>
                             <iframe
                                 title="PluralityPopup"
-                                src={widgetUrl}
+                                src={url}
                                 width="450"
                                 height="600"
                                 frameBorder="0"
