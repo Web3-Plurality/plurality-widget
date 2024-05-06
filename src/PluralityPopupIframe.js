@@ -1,10 +1,7 @@
 import React, { useEffect, Component } from 'react';
 
-const widgetUrl = 'http://localhost:3000';
-const url = 'http://localhost:3000/auth-pages/login/?isWidget=true&apps=${encodedApps}&origin=${currentUrl}';
-const encodedApps = encodeURIComponent("facebook,twitter");
-const currentUrl = encodeURIComponent(window.location.href); // Get current window URL
-
+const baseUrl = 'http://localhost:3000';
+let frameUrl;
 let style;
 let eventListenerAttached = false;
 
@@ -17,6 +14,13 @@ class PluralityPopupIframe extends Component {
             window.addEventListener('message', this.receiveMessage, false);
             eventListenerAttached = true;
         }
+        const { options } = this.props;
+        const encodedApps = encodeURIComponent(options.apps);
+        const currentUrl = encodeURIComponent(window.location.href); // Get current window URL
+
+        frameUrl = `${baseUrl}/auth-pages/login?isWidget=true&apps=${encodedApps}&origin=${currentUrl}&id_platform=none`;
+        console.log(frameUrl);
+        
     }
 
     openPopup = () => {
@@ -30,7 +34,7 @@ class PluralityPopupIframe extends Component {
     }
     receiveMessage = (event) => {
         const { onDataReturned } = this.props;
-        if (event.origin === widgetUrl) {
+        if (event.origin === baseUrl) {
             console.log("Received message from iframe: "+onDataReturned);
             const data = event.data;
             console.log('Received data from opened window:', data);
@@ -53,7 +57,7 @@ class PluralityPopupIframe extends Component {
                             <button onClick={this.closePopup}>Close</button>
                             <iframe
                                 title="PluralityPopup"
-                                src={url}
+                                src={frameUrl}
                                 width="450"
                                 height="600"
                                 frameBorder="0"
