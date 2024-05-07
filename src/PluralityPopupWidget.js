@@ -31,7 +31,7 @@ class PluralityPopupWidget extends Component {
 
         // Attach event listener only once, outside of this function
         if (!this.eventListenerAttached) {
-            window.addEventListener('message', this.receiveMessage, false);
+            //window.addEventListener('message', this.receiveMessage, false);
             this.eventListenerAttached = true;
         }
     };

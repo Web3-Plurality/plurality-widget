@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './buttonStyle.css'
 import PluralityModal from './components/PluralityModal';
 
-const baseUrl = 'http://localhost:3000';
+const baseUrl = process.env.REACT_APP_POPUP_URL;
 let frameUrl;
 let eventListenerAttached = false;
 
