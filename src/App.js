@@ -1,7 +1,7 @@
 import React from 'react';
 import PluralityPopup from './PluralityPopup';
-import { parseEther } from 'ethers';
-import {getConnectedAccount, getMessageSignature, getBalance, sendTransaction} from "./Web3ProxyLibrary";
+import { getConnectedAccount, getMessageSignature, getBalance, sendTransaction } from "./Web3ProxyLibrary";
+
 const App = () => {
 
     // Handle the data returned from the widget
@@ -20,12 +20,12 @@ const App = () => {
                 onDataReturned={handleDataReturned}
             />
             <button onClick={() => getConnectedAccount()}>Send Metamask Account query</button>
-            <br/>
+            <br />
             <button onClick={() => getMessageSignature("Example `personal_sign` message.")}>Send Metamask Sign query</button>
-            <br/>
+            <br />
             <button onClick={() => getBalance()}>Send Metamask Balance query</button>
-            <br/>
-            <button onClick={() => sendTransaction("0xe613B4cd69Fe20E8bd0F0D79a264210886bA1AA2","0.01")}>Send Metamask Transaction</button>
+            <br />
+            <button onClick={() => sendTransaction("0xe613B4cd69Fe20E8bd0F0D79a264210886bA1AA2", "0.01")}>Send Metamask Transaction</button>
         </div>
     );
 };
