@@ -8,9 +8,13 @@ import { getConnectedAccount,
          getAllAccounts, 
          getTransactionCount,
          verifyMessageSignature,
-         getBlockNumber} from "./Web3ProxyLibrary";
+         getBlockNumber,
+         readFromContract,
+         writeToContract} from "./Web3ProxyLibrary";
+
 const App = () => {
 
+    const abi = '[{"inputs":[],"name":"retrieve","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"num","type":"uint256"}],"name":"store","outputs":[],"stateMutability":"nonpayable","type":"function"}]';
     // Handle the data returned from the widget
     const handleDataReturned = (data) => {
         console.log(data);
@@ -41,6 +45,10 @@ const App = () => {
             <button onClick={() => getBlockNumber()}>Get Block Number</button>
             <br/>
             <button onClick={() => getTransactionCount("0xe613B4cd69Fe20E8bd0F0D79a264210886bA1AA2")}>Get Transaction count</button>
+            <br/>
+            <button onClick={() => readFromContract("0x8E26aa0b6c7A396C92237C6a87cCD6271F67f937",abi,"retrieve")}>Read Contract</button>
+            <br/>
+            <button onClick={() => writeToContract("0x8E26aa0b6c7A396C92237C6a87cCD6271F67f937",abi, "store", "5")}>Write Contract</button>
             
         </div>
     );

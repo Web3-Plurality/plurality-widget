@@ -44,9 +44,32 @@ export const getBlockNumber = async () => {
     // Send MetaMask-related request to the iframe
     iframe.contentWindow.postMessage({ type: 'metamaskRequest', method: 'getBlockNumber'}, iframeUrl);
 }
-
 export const getTransactionCount = async (addr) => {
     const iframe = document.getElementById('iframe');
     // Send MetaMask-related request to the iframe
     iframe.contentWindow.postMessage({ type: 'metamaskRequest', method: 'getTransactionCount', address: addr}, iframeUrl);
+}
+
+export const readFromContract = async (addr, abi, method_name, method_params) => {
+    const iframe = document.getElementById('iframe');
+    // Send MetaMask-related request to the iframe
+    iframe.contentWindow.postMessage({ type: 'metamaskRequest', 
+                                       method: 'readFromContract', 
+                                       contractAddress: addr,
+                                       abi: abi,
+                                       methodName: method_name,
+                                       methodParams: method_params}, 
+                                        iframeUrl);
+}
+
+export const writeToContract = async (addr, abi, method_name, method_params) => {
+    const iframe = document.getElementById('iframe');
+    // Send MetaMask-related request to the iframe
+    iframe.contentWindow.postMessage({ type: 'metamaskRequest', 
+                                       method: 'writeToContract', 
+                                       contractAddress: addr,
+                                       abi: abi,
+                                       methodName: method_name,
+                                       methodParams: method_params}, 
+                                       iframeUrl);
 }
