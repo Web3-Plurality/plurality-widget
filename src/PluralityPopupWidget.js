@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './buttonStyle.css'
 
-const widgetUrl = 'https://app.plurality.network/auth-pages/login';
+const widgetUrl = 'https://mvfw.plurality.network/auth-pages/login';
 
 class PluralityPopupWidget extends Component {
     constructor(props) {
