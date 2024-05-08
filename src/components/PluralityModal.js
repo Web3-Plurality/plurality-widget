@@ -22,7 +22,7 @@ const PluralityModal = ({ isOpen, closePlurality, frameUrl, style }) => {
                 maskClosable={false}
                 width={452}
                 padding={0}
-                bodyStyle={{ height: "605px" }}
+                bodyStyle={{ height: "550px" }}
                 style={{
                     padding: 0
                 }}

@@ -12,7 +12,15 @@ class PluralityPopup extends Component {
         super(props);
 
         this.state = {
-            iframeStyle: { width: 0, height: 0, border: 'none', position: 'absolute', overflow: 'hidden' },
+            iframeStyle: {
+                width: 0,
+                height: 0,
+                border: 'none',
+                position: 'absolute',
+                left: '50%',
+                top: '50%',
+                transform: 'translate(-50%, -50%)'
+            },
             isOpen: false
         };
         // Attach event listener only once, outside of this function
@@ -30,14 +38,10 @@ class PluralityPopup extends Component {
     openPluralityPopup = () => {
         this.setState({
             iframeStyle: {
-                width: 450,
-                height: 520,
-                border: 'none',
-                position: 'absolute',
-                overflow: 'hidden',
-                left: '50%',
-                top: '50%',
-                transform: 'translate(-50%, -50%)'
+                ...this.state.iframeStyle,
+                width: 460,
+                height: 600,
+
             },
             isOpen: true
         });
@@ -48,10 +52,9 @@ class PluralityPopup extends Component {
     closePluralityPopup = () => {
         this.setState({
             iframeStyle: {
+                ...this.state.iframeStyle,
                 width: 0,
                 height: 0,
-                border: 'none',
-                position: 'absolute'
             },
             isOpen: false
         });
@@ -79,6 +82,7 @@ class PluralityPopup extends Component {
                     "--flipTextColor": this.props.customization?.flipTextColor || '#AE388B',
                     width: this.props.customization?.width
                 }}></a>
+
                 <PluralityModal
                     closePlurality={this.closePluralityPopup}
                     isOpen={!this.state.isOpen}
