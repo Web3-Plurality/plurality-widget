@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import PluralityPopup from './PluralityPopup';
 import { parseEther } from 'ethers';
 import { getConnectedAccount, 
@@ -14,11 +14,15 @@ import { getConnectedAccount,
 
 const App = () => {
 
+    const childRef = useRef(null);
+
     const abi = '[{"inputs":[],"name":"retrieve","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"num","type":"uint256"}],"name":"store","outputs":[],"stateMutability":"nonpayable","type":"function"}]';
     // Handle the data returned from the widget
     const handleDataReturned = (data) => {
-        console.log(data);
-        alert(data.toString());
+        const receivedData = JSON.parse(JSON.stringify(data))
+        console.log("localhost:3001 receives:", receivedData);
+        alert(JSON.stringify(data));
+        childRef.current.closePluralityPopup();
         // Handle the received data in the external webpage
         // ... (perform actions with the received data)
     };
@@ -29,6 +33,7 @@ const App = () => {
             <PluralityPopup
                 options={{ apps: 'facebook,twitter,lens' }}
                 onDataReturned={handleDataReturned}
+                ref={childRef}
             />
             <button onClick={() => getAllAccounts()}>Get All Accounts</button>
             <br/>
