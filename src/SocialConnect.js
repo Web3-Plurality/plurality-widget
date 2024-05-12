@@ -6,7 +6,7 @@ const baseUrl = process.env.REACT_APP_POPUP_URL;
 let frameUrl;
 let eventListenerAttached = false;
 
-class PluralityPopup extends Component {
+class SocialConnect extends Component {
 
     constructor(props) {
         super(props);
@@ -35,7 +35,7 @@ class PluralityPopup extends Component {
         frameUrl = `${baseUrl}/auth-pages/login?isWidget=true&apps=${encodedApps}&origin=${currentUrl}&id_platform=none`;
     }
 
-    openPluralityPopup = () => {
+    openSocialConnectPopup = () => {
         this.setState({
             iframeStyle: {
                 ...this.state.iframeStyle,
@@ -43,20 +43,20 @@ class PluralityPopup extends Component {
                 height: 600,
 
             },
-            isOpen: true
+            isOpen: true,
         });
     };
 
 
 
-    closePluralityPopup = () => {
+    closeSocialConnectPopup = () => {
         this.setState({
             iframeStyle: {
                 ...this.state.iframeStyle,
                 width: 0,
                 height: 0,
             },
-            isOpen: false
+            isOpen: false,
         });
     };
 
@@ -93,4 +93,4 @@ class PluralityPopup extends Component {
     }
 }
 
-export default PluralityPopup;
+export default SocialConnect;

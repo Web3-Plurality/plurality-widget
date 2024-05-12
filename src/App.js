@@ -1,6 +1,5 @@
 import React, { useRef } from 'react';
-import PluralityPopup from './PluralityPopup';
-import { parseEther } from 'ethers';
+import SocialConnect from './SocialConnect';
 import { getConnectedAccount, 
          getMessageSignature, 
          getBalance, 
@@ -30,7 +29,7 @@ const App = () => {
     return (
         <div>
             {/* Render the widget component */}
-            <PluralityPopup
+            <SocialConnect
                 options={{ apps: 'facebook,twitter,lens' }}
                 onDataReturned={handleDataReturned}
                 ref={childRef}
