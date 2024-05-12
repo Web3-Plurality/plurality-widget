@@ -21,7 +21,7 @@ const App = () => {
         const receivedData = JSON.parse(JSON.stringify(data))
         console.log("localhost:3001 receives:", receivedData);
         alert(JSON.stringify(data));
-        childRef.current.closePluralityPopup();
+        childRef.current.closeSocialConnectPopup();
         // Handle the received data in the external webpage
         // ... (perform actions with the received data)
     };

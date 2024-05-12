@@ -75,7 +75,7 @@ class SocialConnect extends Component {
     render() {
         return (
             <div>
-                <a href='#' className="btn-flip" onClick={this.openPluralityPopup} data-back="Social" data-front="Connect" style={{
+                <a href='#' className="btn-flip" onClick={this.openSocialConnectPopup} data-back="Social" data-front="Connect" style={{
                     "--height": this.props.customization?.height || '40px',
                     "--initialBackgroundColor": this.props.customization?.initialBackgroundColor || '#AE388B', "--initialTextColor": this.props.customization?.initialTextColor || '#ffffff',
                     "--flipBackgroundColor": this.props.customization?.flipBackgroundColor || '#EFEBE0',
@@ -84,7 +84,7 @@ class SocialConnect extends Component {
                 }}></a>
 
                 <PluralityModal
-                    closePlurality={this.closePluralityPopup}
+                    closePlurality={this.closeSocialConnectPopup}
                     isOpen={!this.state.isOpen}
                     frameUrl={frameUrl}
                     style={this.state.iframeStyle} />
