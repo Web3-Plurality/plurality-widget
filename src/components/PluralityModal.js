@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import { Modal } from 'antd';
 
 const PluralityModal = ({ isOpen, closePlurality, frameUrl, style }) => {
@@ -14,7 +14,7 @@ const PluralityModal = ({ isOpen, closePlurality, frameUrl, style }) => {
     const reloadIframe = () => {
         const iframe = document.getElementById('iframe');
         if (iframe) {
-          iframe.contentWindow.postMessage('reloadIframe', '*');
+            iframe.contentWindow.postMessage('reloadIframe', '*');
         }
     };
 
@@ -37,8 +37,11 @@ const PluralityModal = ({ isOpen, closePlurality, frameUrl, style }) => {
                 padding={0}
                 bodyStyle={{ height: "550px" }}
                 style={{
-                    padding: 0
+                    borderRadius: "20px",
+                    overflow: "hidden",
+                    backgroundColor: "transparent"
                 }}
+                className='modalCustom'
             >
                 <div className="popup-container">
                     <div className="popup-content">
@@ -52,7 +55,7 @@ const PluralityModal = ({ isOpen, closePlurality, frameUrl, style }) => {
 
                     </div>
                 </div>
-            </Modal>
+            </Modal >
         </>
     );
 };
