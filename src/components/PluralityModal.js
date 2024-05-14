@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Modal } from 'antd';
 
 const PluralityModal = ({ isOpen, closePlurality, frameUrl, style }) => {
@@ -10,19 +10,6 @@ const PluralityModal = ({ isOpen, closePlurality, frameUrl, style }) => {
     const handleCancel = () => {
         closePlurality()
     };
-
-    const reloadIframe = () => {
-        const iframe = document.getElementById('iframe');
-        if (iframe) {
-            iframe.contentWindow.postMessage('reloadIframe', '*');
-        }
-    };
-
-    useEffect(() => {
-        if (isOpen) {
-            reloadIframe();
-        }
-    }, [isOpen]);
 
     return (
         <>
