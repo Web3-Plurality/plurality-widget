@@ -1,6 +1,10 @@
 import { parseEther } from 'ethers';
 
-const iframeUrl= process.env.REACT_APP_POPUP_URL;    
+//for local development
+//const iframeUrl = "http://localhost:3000";
+
+//for prod development
+const iframeUrl = "https://app.plurality.network";
 
 export const getAllAccounts = async () => {
     const iframe = document.getElementById('iframe');
