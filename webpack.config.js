@@ -2,10 +2,10 @@ const path = require('path');
 
 module.exports = {
   mode: 'production',
-  entry: './src/PluralityPopupWidget.js',
+  entry: './src/PluralitySocialConnect.js',
   output: {
     path: path.resolve('lib'),
-    filename: 'PluralityPopupWidget.js',
+    filename: 'PluralitySocialConnect.js',
     libraryTarget: 'commonjs2',
   },
   module: {

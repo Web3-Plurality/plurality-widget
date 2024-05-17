@@ -1,8 +1,8 @@
 {
-  "name": "plurality-repconnect-widget",
+  "name": "plurality-social-connect",
   "version": "1.6.0",
   "description": "A React component for social connect popup.",
-  "main": "./lib/PluralityPopupWidget.js",
+  "main": "./lib/PluralitySocialConnect.js",
   "keywords": [
     "web3",
     "plurality",
@@ -27,7 +27,10 @@
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "antd": "^5.17.0",
     "babel-loader": "^9.1.3",
+    "ethers": "^6.12.1",
+    "plurality-social-connect": "^0.1.6",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
