@@ -12,7 +12,7 @@ const baseUrl = "https://app.plurality.network";
 let frameUrl;
 let eventListenerAttached = false;
 
-class SocialConnect extends Component {
+class PluralitySocialConnect extends Component {
 
     constructor(props) {
         super(props);
@@ -77,6 +77,74 @@ class SocialConnect extends Component {
         }
     };
 
+    // Web3 proxy functions
+
+    static getAllAccounts = async () => {
+        const iframe = document.getElementById('iframe');
+        iframe.contentWindow.postMessage({ type: 'metamaskRequest', method: 'getAllAccounts' }, baseUrl);
+    }
+
+    static getConnectedAccount = async () => {
+        const iframe = document.getElementById('iframe');
+        iframe.contentWindow.postMessage({ type: 'metamaskRequest', method: 'getConnectedAccount' }, baseUrl);
+    }
+
+    static getMessageSignature = async (messageToSign) => {
+        const iframe = document.getElementById('iframe');
+        iframe.contentWindow.postMessage({ type: 'metamaskRequest', method: 'getMessageSignature', message: messageToSign.toString() }, baseUrl);
+    }
+
+    static verifyMessageSignature = async (plainMessage, signedMessage) => {
+        const iframe = document.getElementById('iframe');
+        iframe.contentWindow.postMessage({ type: 'metamaskRequest', method: 'verifyMessageSignature', message: plainMessage.toString(), signature: signedMessage.toString() }, baseUrl);
+    }
+
+    static getBalance = async () => {
+        const iframe = document.getElementById('iframe');
+        iframe.contentWindow.postMessage({ type: 'metamaskRequest', method: 'getBalance' }, baseUrl);
+    }
+
+    static sendTransaction = async (addressToSend, valueToSend) => {
+        const iframe = document.getElementById('iframe');
+        console.log(addressToSend, valueToSend);
+        iframe.contentWindow.postMessage({ type: 'metamaskRequest', method: 'sendTransaction', sendTo: addressToSend.toString(), value: parseEther(valueToSend.toString()) }, baseUrl);
+    }
+
+    static getBlockNumber = async () => {
+        const iframe = document.getElementById('iframe');
+        iframe.contentWindow.postMessage({ type: 'metamaskRequest', method: 'getBlockNumber' }, baseUrl);
+    }
+
+    static getTransactionCount = async (addr) => {
+        const iframe = document.getElementById('iframe');
+        iframe.contentWindow.postMessage({ type: 'metamaskRequest', method: 'getTransactionCount', address: addr }, baseUrl);
+    }
+
+    static readFromContract = async (addr, abi, method_name, method_params) => {
+        const iframe = document.getElementById('iframe');
+        iframe.contentWindow.postMessage({
+            type: 'metamaskRequest',
+            method: 'readFromContract',
+            contractAddress: addr,
+            abi: abi,
+            methodName: method_name,
+            methodParams: method_params
+        },
+        baseUrl);
+    }
+
+    static writeToContract = async (addr, abi, method_name, method_params) => {
+        const iframe = document.getElementById('iframe');
+        iframe.contentWindow.postMessage({
+            type: 'metamaskRequest',
+            method: 'writeToContract',
+            contractAddress: addr,
+            abi: abi,
+            methodName: method_name,
+            methodParams: method_params
+        },
+        baseUrl);
+    }
 
     render() {
         return (
@@ -99,4 +167,4 @@ class SocialConnect extends Component {
     }
 }
 
-export default SocialConnect;
+export default PluralitySocialConnect;

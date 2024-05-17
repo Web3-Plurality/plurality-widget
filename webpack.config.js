@@ -2,14 +2,10 @@ const path = require('path');
 
 module.exports = {
   mode: 'production',
-  entry: {
-    SocialConnect: './src/SocialConnect.js',
-    Web3ProxyLibrary: './src/Web3ProxyLibrary.js'
-  },
+  entry: './src/PluralitySocialConnect.js',
   output: {
     path: path.resolve('lib'),
-    filename: '[name].js',
-    library: ['Plurality', '[name]'], 
+    filename: 'PluralitySocialConnect.js',
     libraryTarget: 'commonjs2',
   },
   module: {
