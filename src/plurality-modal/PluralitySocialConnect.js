@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './buttonStyle.css'
-import PluralityModal from './components/PluralityModal';
+import PluralityModal from './PluralityModal';
 
 //for local development
 //const baseUrl = "http://localhost:3000";

@@ -1,0 +1,7 @@
+.modalCustom .ant-modal-content {
+    background-color: transparent;
+}
+
+.ant-modal-root .ant-modal-mask {
+    background-color: #000000;
+}
