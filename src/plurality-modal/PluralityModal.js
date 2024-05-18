@@ -1,5 +1,6 @@
 import React from 'react';
 import { Modal } from 'antd';
+import './modalBackground.css'
 
 const PluralityModal = ({ isOpen, closePlurality, frameUrl, style }) => {
 

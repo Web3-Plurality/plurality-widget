@@ -2,7 +2,7 @@ const path = require('path');
 
 module.exports = {
   mode: 'production',
-  entry: './src/PluralitySocialConnect.js',
+  entry: './src/plurality-modal/PluralitySocialConnect.js',
   output: {
     path: path.resolve('lib'),
     filename: 'PluralitySocialConnect.js',
