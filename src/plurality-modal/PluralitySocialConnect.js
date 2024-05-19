@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import './buttonStyle.css'
 import PluralityModal from './PluralityModal';
 
+import { ethers } from 'ethers';
+
+
 //for local development
 //const baseUrl = "http://localhost:3000";
 
@@ -107,7 +110,7 @@ class PluralitySocialConnect extends Component {
     static sendTransaction = async (addressToSend, valueToSend) => {
         const iframe = document.getElementById('iframe');
         console.log(addressToSend, valueToSend);
-        iframe.contentWindow.postMessage({ type: 'metamaskRequest', method: 'sendTransaction', sendTo: addressToSend.toString(), value: parseEther(valueToSend.toString()) }, baseUrl);
+        iframe.contentWindow.postMessage({ type: 'metamaskRequest', method: 'sendTransaction', sendTo: addressToSend.toString(), value: ethers.parseEther(valueToSend.toString()) }, baseUrl);
     }
 
     static getBlockNumber = async () => {

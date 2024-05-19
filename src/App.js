@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import PluralitySocialConnect from 'plurality-social-connect';
+import PluralitySocialConnect from './plurality-modal/PluralitySocialConnect';
 
 const App = () => {
 
