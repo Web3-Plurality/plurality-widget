@@ -133,7 +133,7 @@ class PluralitySocialConnect extends Component {
             methodName: method_name,
             methodParams: method_params
         },
-        baseUrl);
+            baseUrl);
     }
 
     static writeToContract = async (addr, abi, method_name, method_params) => {
@@ -146,19 +146,19 @@ class PluralitySocialConnect extends Component {
             methodName: method_name,
             methodParams: method_params
         },
-        baseUrl);
+            baseUrl);
     }
 
     render() {
         return (
             <div>
-                <a href='#' className="btn-flip" onClick={this.openSocialConnectPopup} data-back="Social" data-front="Connect" style={{
+                <button className="btn-flip" onClick={this.openSocialConnectPopup} data-back="Social" data-front="Connect" style={{
                     "--height": this.props.customization?.height || '40px',
                     "--initialBackgroundColor": this.props.customization?.initialBackgroundColor || '#AE388B', "--initialTextColor": this.props.customization?.initialTextColor || '#ffffff',
                     "--flipBackgroundColor": this.props.customization?.flipBackgroundColor || '#EFEBE0',
                     "--flipTextColor": this.props.customization?.flipTextColor || '#AE388B',
                     width: this.props.customization?.width
-                }}></a>
+                }}></button>
 
                 <PluralityModal
                     closePlurality={this.closeSocialConnectPopup}
