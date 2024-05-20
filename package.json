@@ -1,6 +1,6 @@
 {
   "name": "plurality-social-connect",
-  "version": "2.1.2",
+  "version": "2.2.0",
   "description": "A React component for social connect popup.",
   "main": "./lib/PluralitySocialConnect.js",
   "keywords": [
