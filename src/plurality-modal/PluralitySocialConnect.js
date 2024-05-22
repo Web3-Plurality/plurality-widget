@@ -3,17 +3,19 @@ import './buttonStyle.css'
 import PluralityModal from './PluralityModal';
 
 import { ethers } from 'ethers';
+import { isDisabled } from '@testing-library/user-event/dist/utils';
 
 
 //for local development
-//const baseUrl = "http://localhost:3000";
+ const baseUrl = "http://localhost:3000";
 
 //for prod development
-const baseUrl = "https://app.plurality.network";
+//const baseUrl = "https://app.plurality.network";
 
 
 let frameUrl;
 let eventListenerAttached = false;
+let shouldDisableButton = false;
 
 class PluralitySocialConnect extends Component {
 
@@ -30,7 +32,8 @@ class PluralitySocialConnect extends Component {
                 top: '50%',
                 transform: 'translate(-50%, -50%)'
             },
-            isOpen: false
+            isOpen: false,
+            isDisabled: false,
         };
         // Attach event listener only once, outside of this function
         if (!eventListenerAttached) {
@@ -70,6 +73,9 @@ class PluralitySocialConnect extends Component {
                     case 'writeToContract':  
                         this.receiveWriteToContract(event);
                         break;
+                    case 'profilesConnectionCompleted':  
+                        this.receiveProfileConnectionCompleted(event);
+                        break;
                     case 'errorMessage':  
                         this.receiveErrorMessage(event);
                         break;
@@ -93,6 +99,7 @@ class PluralitySocialConnect extends Component {
 
             },
             isOpen: true,
+            isDisabled: shouldDisableButton,
         });
     };
 
@@ -106,6 +113,7 @@ class PluralitySocialConnect extends Component {
                 height: 0,
             },
             isOpen: false,
+            isDisabled: shouldDisableButton,
         });
     };
 
@@ -230,6 +238,13 @@ class PluralitySocialConnect extends Component {
         }
     };
 
+    receiveProfileConnectionCompleted = (event) => {
+        if (event.origin === baseUrl) {
+            const { data } = event.data;
+            shouldDisableButton = data === "true";
+        }
+    };
+
     receiveErrorMessage = (event) => {
         const { onErrorMessage } = this.props;
         if (event.origin === baseUrl) {
@@ -308,10 +323,15 @@ class PluralitySocialConnect extends Component {
             baseUrl);
     }
 
+    clickme = () => {
+        console.log("clicked")
+        console.log(this.state.isDisabled)
+    }
+
     render() {
         return (
             <div>
-                <button className="btn-flip" onClick={this.openSocialConnectPopup} data-back="Social" data-front="Connect" style={{
+                <button disabled={this.state.isDisabled} className="btn-flip" onClick={this.openSocialConnectPopup} data-back="Social" data-front={this.state.isDisabled ? "Connected" : "Connect"} style={{
                     "--height": this.props.customization?.height || '40px',
                     "--initialBackgroundColor": this.props.customization?.initialBackgroundColor || '#AE388B', "--initialTextColor": this.props.customization?.initialTextColor || '#ffffff',
                     "--flipBackgroundColor": this.props.customization?.flipBackgroundColor || '#EFEBE0',
