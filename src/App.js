@@ -5,14 +5,70 @@ const App = () => {
 
     const childRef = useRef(null);
     const abi = '[{"inputs":[],"name":"retrieve","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"num","type":"uint256"}],"name":"store","outputs":[],"stateMutability":"nonpayable","type":"function"}]';
-    // Handle the data returned from the widget
-    const handleDataReturned = (data) => {
+    
+    // Profile data handle
+    const handleProfileDataReturned = (data) => {
         const receivedData = JSON.parse(JSON.stringify(data))
-        console.log("dapp receives:", receivedData);
+        console.log("Get profile data:", receivedData);
         alert(JSON.stringify(data));
         childRef.current.closeSocialConnectPopup();
-        // Handle the received data in the external webpage
-        // ... (perform actions with the received data)
+    };
+
+    // Web3 function handles
+    const handleGetAllAccounts = (data) => {
+        const receivedData = JSON.parse(JSON.stringify(data))
+        console.log("Get all accounts:", receivedData);
+        alert(JSON.stringify(data));
+    };
+    const handleGetConnectedAccount = (data) => {
+        const receivedData = JSON.parse(JSON.stringify(data))
+        console.log("Get connected account:", receivedData);
+        alert(JSON.stringify(data));
+    };
+    const handleMessageSignature = (data) => {
+        const receivedData = JSON.parse(JSON.stringify(data))
+        console.log("Get message signature:", receivedData);
+        alert(JSON.stringify(data));
+    };
+    const handleVerifyMessageSignature = (data) => {
+        const receivedData = JSON.parse(JSON.stringify(data))
+        console.log("Verify message signature:", receivedData);
+        alert(JSON.stringify(data));
+    };
+    const handleGetBalance = (data) => {
+        const receivedData = JSON.parse(JSON.stringify(data))
+        console.log("Get balance:", receivedData);
+        alert(JSON.stringify(data));
+    };
+    const handleSendTransaction = (data) => {
+        const receivedData = JSON.parse(JSON.stringify(data))
+        console.log("Send transaction:", receivedData);
+        alert(JSON.stringify(data));
+    };
+    const handleGetBlockNumber = (data) => {
+        const receivedData = JSON.parse(JSON.stringify(data))
+        console.log("Get block number:", receivedData);
+        alert(JSON.stringify(data));
+    };
+    const handleGetTransactionCount = (data) => {
+        const receivedData = JSON.parse(JSON.stringify(data))
+        console.log("Get transaction count:", receivedData);
+        alert(JSON.stringify(data));
+    };
+    const handleReadFromContract = (data) => {
+        const receivedData = JSON.parse(JSON.stringify(data))
+        console.log("Read from contract:", receivedData);
+        alert(JSON.stringify(data));
+    };
+    const handleWriteToContract = (data) => {
+        const receivedData = JSON.parse(JSON.stringify(data))
+        console.log("Write to contract:", receivedData);
+        alert(JSON.stringify(data));
+    };
+    const handleErrorMessage = (data) => {
+        const receivedData = JSON.parse(JSON.stringify(data))
+        console.log("Get error message:", receivedData);
+        alert(JSON.stringify(data));
     };
 
     return (
@@ -20,7 +76,18 @@ const App = () => {
             {/* Render the widget component */}
             <PluralitySocialConnect
                 options={{ apps: 'facebook,twitter' }}
-                onDataReturned={handleDataReturned}
+                onProfileDataReturned={handleProfileDataReturned}
+                onGetAllAccounts={handleGetAllAccounts}
+                onGetConnectedAccount={handleGetConnectedAccount}
+                onGetMessageSignature={handleMessageSignature}
+                onVerifyMessageSignature={handleVerifyMessageSignature}
+                onGetBalance={handleGetBalance}
+                onSendTransaction={handleSendTransaction}
+                onGetBlockNumber={handleGetBlockNumber}
+                onGetTransactionCount={handleGetTransactionCount}
+                onReadFromContract={handleReadFromContract}
+                onWriteToContract={handleWriteToContract}
+                onErrorMessage={handleErrorMessage}
                 //customization={{ height: '200px', width: '500px', initialBackgroundColor: '#E8A123', initialTextColor: '#FFFFFF', flipBackgroundColor: '#12AE83', flipTextColor: '#FFFFFF'}}
                 ref={childRef}
             />

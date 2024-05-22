@@ -34,7 +34,47 @@ class PluralitySocialConnect extends Component {
         };
         // Attach event listener only once, outside of this function
         if (!eventListenerAttached) {
-            window.addEventListener('message', this.receiveMessage, false);
+            window.addEventListener('message', (event) => {  
+                const { eventName } = event.data;  
+                switch (eventName) {  
+                    case 'profileDataReturned':  
+                        this.receiveProfileDataReturned(event);
+                        break;  
+                    case 'getAllAccounts':  
+                        this.receiveProfileDataReturned(event);
+                        break;  
+                    case 'getConnectedAccount':  
+                        this.receiveGetConnectedAccount(event);
+                        break;  
+                    case 'getMessageSignature':  
+                        this.receiveGetMessageSignature(event);
+                        break;   
+                    case 'verifyMessageSignature':  
+                        this.receiveVerifyMessageSignature(event);
+                        break;  
+                    case 'getBalance':  
+                        this.receiveGetBalance(event);
+                        break;
+                    case 'sendTransaction':  
+                        this.receiveSendTransaction(event);
+                        break;
+                    case 'getBlockNumber':  
+                        this.receiveGetBlockNumber(event);
+                        break;
+                    case 'getTransactionCount':  
+                        this.receiveVerifyMessageSignature(event);
+                        break;
+                    case 'readFromContract':  
+                        this.receiveReadFromContract(event);
+                        break;
+                    case 'writeToContract':  
+                        this.receiveWriteToContract(event);
+                        break;
+                    case 'errorMessage':  
+                        this.receiveErrorMessage(event);
+                        break;
+                }
+            }, false);
             eventListenerAttached = true;
         }
         const { options } = this.props;
@@ -69,18 +109,137 @@ class PluralitySocialConnect extends Component {
         });
     };
 
-    receiveMessage = (event) => {
-        const { onDataReturned } = this.props;
+    receiveProfileDataReturned = (event) => {
+        const { onProfileDataReturned } = this.props;
         if (event.origin === baseUrl) {
             const data = event.data;
             //console.log('Received data from embedded popup:', data);
-            if (onDataReturned) {
-                onDataReturned(data);
+            if (onProfileDataReturned) {
+                onProfileDataReturned(data);
             }
         }
     };
 
-    // Web3 proxy functions
+    receiveGetAllAccounts = (event) => {
+        const { onGetAllAccounts } = this.props;
+        if (event.origin === baseUrl) {
+            const data = event.data;
+            //console.log('Received data from embedded popup:', data);
+            if (onGetAllAccounts) {
+                onGetAllAccounts(data);
+            }
+        }
+    };
+
+    receiveGetConnectedAccount = (event) => {
+        const { onGetConnectedAccount } = this.props;
+        if (event.origin === baseUrl) {
+            const data = event.data;
+            //console.log('Received data from embedded popup:', data);
+            if (onGetConnectedAccount) {
+                onGetConnectedAccount(data);
+            }
+        }
+    };
+
+    receiveGetMessageSignature = (event) => {
+        const { onGetMessageSignature } = this.props;
+        if (event.origin === baseUrl) {
+            const data = event.data;
+            //console.log('Received data from embedded popup:', data);
+            if (onGetMessageSignature) {
+                onGetMessageSignature(data);
+            }
+        }
+    };
+
+    receiveVerifyMessageSignature = (event) => {
+        const { onVerifyMessageSignature } = this.props;
+        if (event.origin === baseUrl) {
+            const data = event.data;
+            //console.log('Received data from embedded popup:', data);
+            if (onVerifyMessageSignature) {
+                onVerifyMessageSignature(data);
+            }
+        }
+    };
+
+    receiveGetBalance = (event) => {
+        const { onGetBalance } = this.props;
+        if (event.origin === baseUrl) {
+            const data = event.data;
+            //console.log('Received data from embedded popup:', data);
+            if (onGetBalance) {
+                onGetBalance(data);
+            }
+        }
+    };
+
+    receiveSendTransaction = (event) => {
+        const { onSendTransaction } = this.props;
+        if (event.origin === baseUrl) {
+            const data = event.data;
+            //console.log('Received data from embedded popup:', data);
+            if (onSendTransaction) {
+                onSendTransaction(data);
+            }
+        }
+    };
+
+    receiveGetBlockNumber = (event) => {
+        const { onGetBlockNumber } = this.props;
+        if (event.origin === baseUrl) {
+            const data = event.data;
+            //console.log('Received data from embedded popup:', data);
+            if (onGetBlockNumber) {
+                onGetBlockNumber(data);
+            }
+        }
+    };
+
+    receiveGetTransactionCount = (event) => {
+        const { onGetTransactionCount } = this.props;
+        if (event.origin === baseUrl) {
+            const data = event.data;
+            //console.log('Received data from embedded popup:', data);
+            if (onGetTransactionCount) {
+                onGetTransactionCount(data);
+            }
+        }
+    };
+
+    receiveReadFromContract = (event) => {
+        const { onReadFromContract } = this.props;
+        if (event.origin === baseUrl) {
+            const data = event.data;
+            //console.log('Received data from embedded popup:', data);
+            if (onReadFromContract) {
+                onReadFromContract(data);
+            }
+        }
+    };
+
+    receiveWriteToContract = (event) => {
+        const { onWriteToContract } = this.props;
+        if (event.origin === baseUrl) {
+            const data = event.data;
+            //console.log('Received data from embedded popup:', data);
+            if (onWriteToContract) {
+                onWriteToContract(data);
+            }
+        }
+    };
+
+    receiveErrorMessage = (event) => {
+        const { onErrorMessage } = this.props;
+        if (event.origin === baseUrl) {
+            const data = event.data;
+            //console.log('Received data from embedded popup:', data);
+            if (onErrorMessage) {
+                onErrorMessage(data);
+            }
+        }
+    };
 
     static getAllAccounts = async () => {
         const iframe = document.getElementById('iframe');
