@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Modal } from 'antd';
 import './modalBackground.css'
 
@@ -11,6 +11,7 @@ const PluralityModal = ({ isOpen, closePlurality, frameUrl, style }) => {
     const handleCancel = () => {
         closePlurality()
     };
+
 
     return (
         <>
