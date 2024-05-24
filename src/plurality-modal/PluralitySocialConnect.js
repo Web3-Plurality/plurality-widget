@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useEffect } from 'react';
 import './buttonStyle.css'
 import PluralityModal from './PluralityModal';
 
@@ -103,6 +103,20 @@ class PluralitySocialConnect extends Component {
         });
     };
 
+    openInvisiblePopup = () => {
+        this.setState({
+            iframeStyle: {
+                ...this.state.iframeStyle,
+                width: 0,
+                height: 0,
+
+            },
+            isOpen: true,
+            isDisabled: shouldDisableButton,
+        });
+        this.performAsyncTasks();
+    };
+
 
 
     closeSocialConnectPopup = () => {
@@ -115,6 +129,7 @@ class PluralitySocialConnect extends Component {
             isOpen: false,
             isDisabled: shouldDisableButton,
         });
+
     };
 
     receiveProfileDataReturned = (event) => {
@@ -327,6 +342,18 @@ class PluralitySocialConnect extends Component {
         console.log("clicked")
         console.log(this.state.isDisabled)
     }
+    sleep = (ms) => {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+    async performAsyncTasks() {
+        await this.sleep(1);
+        this.closeSocialConnectPopup();
+
+    }
+    
+    componentDidMount() {
+        this.openInvisiblePopup();
+      }
 
     render() {
         return (
