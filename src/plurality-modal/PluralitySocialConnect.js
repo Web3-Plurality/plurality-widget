@@ -7,10 +7,10 @@ import { isDisabled } from '@testing-library/user-event/dist/utils';
 
 
 //for local development
- const baseUrl = "http://localhost:3000";
+ //const baseUrl = "http://localhost:3000";
 
 //for prod development
-//const baseUrl = "https://app.plurality.network";
+const baseUrl = "https://app.plurality.network";
 
 
 let frameUrl;
