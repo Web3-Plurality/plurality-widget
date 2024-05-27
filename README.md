@@ -1,4 +1,4 @@
-# Plurality Reputation Connect Widget
+# Plurality Social Connect Widget
 This repo contains the functionality to load the plurality identity oracle as a popup widget.
 
 ## To run
