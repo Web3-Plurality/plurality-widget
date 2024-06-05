@@ -71,6 +71,13 @@ const App = () => {
         alert(JSON.stringify(data));
     };
 
+    const awaitGetAllAccounts = async () => {
+        console.log("entering await...")
+        const resp = await PluralitySocialConnect.getAllAccountsPromise();
+        console.log(resp)
+        console.log("exiting await...")
+    }
+
     return (
         <div>
             {/* Render the widget component */}
@@ -91,6 +98,8 @@ const App = () => {
                 //customization={{ height: '200px', width: '500px', initialBackgroundColor: '#E8A123', initialTextColor: '#FFFFFF', flipBackgroundColor: '#12AE83', flipTextColor: '#FFFFFF'}}
                 ref={childRef}
             />
+            <button onClick={awaitGetAllAccounts}>Get All Accounts using await</button>
+            <br />
             <button onClick={() => PluralitySocialConnect.getAllAccounts()}>Get All Accounts</button>
             <br />
             <button onClick={() => PluralitySocialConnect.getConnectedAccount()}>Get Connected Account</button>

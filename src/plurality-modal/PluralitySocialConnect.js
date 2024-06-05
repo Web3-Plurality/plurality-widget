@@ -6,9 +6,10 @@ import { ethers } from 'ethers';
 import { isDisabled } from '@testing-library/user-event/dist/utils';
 
 
+//const baseUrl = "https://beta.plurality.network";
+
 //for local development
- //const baseUrl = "http://localhost:3000";
- const baseUrl = "https://beta.plurality.network";
+const baseUrl = "http://localhost:3000";
 
 //for prod development
 //const baseUrl = "https://app.plurality.network";
@@ -89,6 +90,29 @@ class PluralitySocialConnect extends Component {
         const currentUrl = encodeURIComponent(window.location.href); // Get current window URL
 
         frameUrl = `${baseUrl}/auth-pages/login?isWidget=true&apps=${encodedApps}&origin=${currentUrl}&id_platform=none`;
+    }
+
+    static getAllAccountsPromise = (iframe, message) => {
+        return new Promise((resolve, reject) => {
+          // Create a unique message ID to identify the response
+          const messageId = `msg-${Date.now()}`;
+      
+          // Set up the message listener
+          function messageListener(event) {
+            if (event.data.eventName === "getAllAccounts" && event.data.id === messageId) {
+              window.removeEventListener('message', messageListener);
+              console.log("resolving message")
+              resolve(event.data);
+            }
+          }
+      
+          console.log("registring event listener for")
+          console.log(messageId)
+          window.addEventListener('message', messageListener);
+
+          const iframe = document.getElementById('iframe');
+          iframe.contentWindow.postMessage({ id: messageId, type: 'metamaskRequest', method: 'getAllAccounts' }, baseUrl);
+        });
     }
 
     openSocialConnectPopup = () => {
