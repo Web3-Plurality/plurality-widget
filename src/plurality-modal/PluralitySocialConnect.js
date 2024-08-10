@@ -88,15 +88,15 @@ class PluralitySocialConnect extends Component {
         const encodedApps = encodeURIComponent(options.apps);
         const currentUrl = encodeURIComponent(window.location.href); // Get current window URL
 
-        frameUrl = `${baseUrl}/auth-pages/login?isWidget=true&apps=${encodedApps}&origin=${currentUrl}&id_platform=none`;
+        frameUrl = `${baseUrl}`;
     }
 
     openSocialConnectPopup = () => {
         this.setState({
             iframeStyle: {
                 ...this.state.iframeStyle,
-                width: 460,
-                height: 600,
+                width: 765,
+                height: 665,
 
             },
             isOpen: true,
