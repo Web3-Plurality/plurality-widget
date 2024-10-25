@@ -175,6 +175,10 @@ class PluralitySocialConnect extends Component<PluralitySocialConnectProps, Plur
         if (eventName === "metamaskConnection") {
             this.setState({ isMetamaskConnected: data.isConnected })
         }
+
+        if (eventName === "smartProfileData") {
+            window.localStorage.setItem("smartProfileData", data.profileData)
+        }
     };
 
 
