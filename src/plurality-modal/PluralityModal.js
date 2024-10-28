@@ -22,9 +22,9 @@ const PluralityModal = ({ isOpen, closePlurality, frameUrl, style }) => {
                 onOk={handleOk}
                 onCancel={handleCancel}
                 maskClosable={false}
-                width={775}
+                width={460}
                 padding={0}
-                bodyStyle={{ height: "665px" }}
+                bodyStyle={{ height: "560px" }}
                 style={{
                     borderRadius: "20px",
                     overflowy: "scroll",
@@ -40,6 +40,7 @@ const PluralityModal = ({ isOpen, closePlurality, frameUrl, style }) => {
                             frameBorder="0"
                             id="iframe"
                             style={style}
+                            allow="transparency"
                         ></iframe>
 
                     </div>

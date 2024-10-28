@@ -1,7 +1,16 @@
 .modalCustom .ant-modal-content {
     background-color: transparent;
+    box-shadow: none;
 }
 
 .ant-modal-root .ant-modal-mask {
-    background-color: #efefef;
+    background-color: rgba(0, 0, 0, .5);
+}
+
+.ant-modal .ant-modal-close-x {
+    margin-left: -15px;
+}
+
+.modalCustom .ant-modal-close:hover {
+    background-color: transparent !important
 }
