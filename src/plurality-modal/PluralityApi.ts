@@ -14,17 +14,25 @@ const baseUrl = "http://localhost:3000";
 
 class PluralityApi {
     static sendRequest = (eventName: string, ...args: string[]) => {
+        const isOpen = localStorage.getItem('isOpen')
         return new Promise((resolve, reject) => {
             // Create a unique message ID to identify the response
             const messageId = `msg-${Date.now()}`;
 
             // Set up the message listener
             function messageListener(event: MessageEvent) {
+                console.log("Inside event handler", event.data.id)
                 if ((event.data.eventName === eventName || event.data.eventName === 'errorMessage') && event.data.id === messageId) {
-                    window.removeEventListener('message', messageListener);
                     console.log("resolving message again", event.data);
                     resolve(event.data);
+                } else if (event.data.eventName === 'noEthersProvider' && event.data.id === messageId) {
+                    alert(`${event.data}`)
+                } else if (event.data.type === 'noWidgetInitiated' && event.data.id === messageId) {
+                    alert(`${event.data.data}`)
+                } else if (event.data.type === 'noMetamskConnection' && event.data.id === messageId) {
+                    alert(`${event.data.data}`)
                 }
+                window.removeEventListener('message', messageListener);
             }
 
             console.log("registering event listener for");
@@ -33,9 +41,7 @@ class PluralityApi {
 
             const iframe = document.getElementById('iframe') as HTMLIFrameElement;
             if (iframe?.contentWindow) {
-                const payload: Payload = { id: messageId, type: 'metamaskRequest', method: eventName };
-
-                console.log("Args:", args.length);
+                const payload: Payload = { id: messageId, type: 'metamaskRequest', method: eventName, isWidgetOpen: isOpen || 'false' };
 
                 if (args.length > 0) {
                     if (eventName === 'sendTransaction') (payload as ReceiverPayload).sendTo = args[0];

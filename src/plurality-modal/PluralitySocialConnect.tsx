@@ -57,6 +57,7 @@ class PluralitySocialConnect extends Component<PluralitySocialConnectProps, Plur
     }
 
     openSocialConnectPopup = () => {
+        localStorage.setItem("isOpen", 'true')
         this.setState({
             iframeStyle: {
                 ...this.state.iframeStyle,
@@ -104,15 +105,12 @@ class PluralitySocialConnect extends Component<PluralitySocialConnectProps, Plur
     };
 
     static getAllAccountsPromise = async () => {
-        const data = await PluralityApi.sendRequest("getAllAccounts");
-        console.log("Finallly: ", data)
-        return data
+        return PluralityApi.sendRequest("getAllAccounts");
     }
 
     static getConnectedAccountPromise = async () => {
-        const data1 = await PluralityApi.sendRequest("getConnectedAccount");
-        console.log('Connected acc', data1)
-        return data1
+        return await PluralityApi.sendRequest("getConnectedAccount");
+
     }
 
     static getBalancePromise = () => {
@@ -201,7 +199,6 @@ class PluralitySocialConnect extends Component<PluralitySocialConnectProps, Plur
                         width: this.props?.customization?.width
                     } as React.CSSProperties}
                 ></button>
-
 
                 <PluralityModal
                     closePlurality={this.closeSocialConnectPopup}

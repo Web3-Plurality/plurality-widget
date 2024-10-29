@@ -2,6 +2,7 @@ export interface BasePayload {
     id: string;
     type: string;
     method: string;
+    isWidgetOpen: string
 }
 
 export interface MessagePayload extends BasePayload {
