@@ -24,14 +24,11 @@ class PluralityApi {
                 if ((event.data.eventName === eventName || event.data.eventName === 'errorMessage') && event.data.id === messageId) {
                     console.log("resolving message again", event.data);
                     resolve(event.data);
+                    window.removeEventListener('message', messageListener);
                 } else if (event.data.eventName === 'noEthersProvider' && event.data.id === messageId) {
                     alert(`${event.data}`)
-                } else if (event.data.type === 'noWidgetInitiated' && event.data.id === messageId) {
-                    alert(`${event.data.data}`)
-                } else if (event.data.type === 'noMetamskConnection' && event.data.id === messageId) {
-                    alert(`${event.data.data}`)
                 }
-                window.removeEventListener('message', messageListener);
+
             }
 
             console.log("registering event listener for");
