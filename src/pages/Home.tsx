@@ -7,30 +7,38 @@ const Home = () => {
 
     const getAllAccounts = async () => {
         const response = (await PluralitySocialConnect.getAllAccountsPromise()) as AllAccountsDataType;
-        const allAccounts = response.data;
-        alert(`All Accounts: ${allAccounts[0]?.address}`)
-        return allAccounts[0]?.address;
+        if (response) {
+            const allAccounts = response.data;
+            alert(`All Accounts: ${allAccounts[0]?.address}`)
+            return allAccounts[0]?.address;
+        }
     }
 
     const getConnectedAccount = async () => {
         const response = (await PluralitySocialConnect.getConnectedAccountPromise()) as ConnectedAccountDataType;
-        const connectedAccount = response.data;
-        alert(`Connected Account: ${connectedAccount?.address}`)
-        return connectedAccount?.address;
+        if (response) {
+            const connectedAccount = response.data;
+            alert(`Connected Account: ${connectedAccount?.address}`)
+            return connectedAccount?.address;
+        }
     }
 
     const getMessageSignature = async (message: string) => {
         const response = (await PluralitySocialConnect.getMessageSignaturePromise(message)) as SignMessageDataType;
-        const signMessage = response.data;
-        alert(`Sign Message Data: ${signMessage}`)
-        return signMessage;
+        if (response) {
+            const signMessage = response.data;
+            alert(`Sign Message Data: ${signMessage}`)
+            return signMessage;
+        }
     }
 
     const getVerifyMessageData = async (message: string, key: string) => {
         const response = (await PluralitySocialConnect.verifyMessageSignaturePromise(message, key)) as VerifySignedMessageDataType;
-        const verifyMessage = response.data;
-        alert(`Verification Signature Data: ${verifyMessage}`)
-        return verifyMessage;
+        if (response) {
+            const verifyMessage = response.data;
+            alert(`Verification Signature Data: ${verifyMessage}`)
+            return verifyMessage;
+        }
     }
 
     return (

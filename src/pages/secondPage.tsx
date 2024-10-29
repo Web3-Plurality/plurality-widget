@@ -8,45 +8,57 @@ const SecondPage = () => {
 
     const getBalance = async () => {
         const response = (await PluralitySocialConnect.getBalancePromise()) as GetBalanceDataType;
-        const getBalance = response.data;
-        alert(`Balance: ${getBalance}`)
-        return getBalance;
+        if (response) {
+            const getBalance = response.data;
+            alert(`Balance: ${getBalance}`)
+            return getBalance;
+        }
     }
 
     const sendTransaction = async (address: string, amount: string) => {
         const response = (await PluralitySocialConnect.sendTransactionPromise(address, amount)) as SendTransactionDataType;
-        const sendTransactionData = response.data;
-        alert(`Send Transaction Response: ${sendTransactionData}`)
-        return sendTransactionData;
+        if (response) {
+            const sendTransactionData = response.data;
+            alert(`Send Transaction Response: ${sendTransactionData}`)
+            return sendTransactionData;
+        }
     }
 
     const getBlockNumber = async () => {
         const response = (await PluralitySocialConnect.getBlockNumberPromise()) as GetBlockNumberDataType;
-        const blockNumber = response.data;
-        alert(`Block Number: ${blockNumber}`)
-        return blockNumber;
+        if (response) {
+            const blockNumber = response.data;
+            alert(`Block Number: ${blockNumber}`)
+            return blockNumber;
+        }
     }
 
     const getTransactionCount = async (address: string) => {
         const response = (await PluralitySocialConnect.getTransactionCountPromise(address)) as GetTransactionCountDataType;
-        const transactionCount = response.data;
-        alert(`Transaction Count: ${transactionCount}`)
-        return transactionCount;
+        if (response) {
+            const transactionCount = response.data;
+            alert(`Transaction Count: ${transactionCount}`)
+            return transactionCount;
+        }
     }
 
 
     const readFromContract = async (address: string, abiVal: string, action: string) => {
         const response = (await PluralitySocialConnect.readFromContractPromise(address, abiVal, action)) as ReadFromContractDataType;
-        const readContract = response.data;
-        alert(`Read From Contract Data: ${readContract}`)
-        return readContract;
+        if (response) {
+            const readContract = response.data;
+            alert(`Read From Contract Data: ${readContract}`)
+            return readContract;
+        }
     }
 
     const writeToContract = async (address: string, abiVal: string, action: string, params: string) => {
         const response = (await PluralitySocialConnect.writeToContractPromise(address, abiVal, action, params)) as WriteToContractDataType;
-        const writeContract = response.data;
-        alert(`Write To a Contract: ${writeContract}`)
-        return writeContract;
+        if (response) {
+            const writeContract = response.data;
+            alert(`Write To a Contract: ${writeContract}`)
+            return writeContract;
+        }
     }
 
     return (
