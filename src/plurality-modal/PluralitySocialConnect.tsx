@@ -28,6 +28,7 @@ interface PluralitySocialConnectProps {
 interface PluralitySocialConnectState {
     iframeStyle: React.CSSProperties;
     isOpen: boolean;
+    showMask: boolean;
     isDisabled: boolean;
     isMetamaskConnected: boolean
 }
@@ -51,13 +52,14 @@ class PluralitySocialConnect extends Component<PluralitySocialConnectProps, Plur
                 background: 'transparent',
             },
             isOpen: false,
+            showMask: false,
             isDisabled: false,
             isMetamaskConnected: false
         };
     }
 
     openSocialConnectPopup = () => {
-        localStorage.setItem("isOpen", 'true')
+        // localStorage.setItem("hasOpened", 'true')
         this.setState({
             iframeStyle: {
                 ...this.state.iframeStyle,
@@ -66,6 +68,7 @@ class PluralitySocialConnect extends Component<PluralitySocialConnectProps, Plur
 
             },
             isOpen: true,
+            showMask: true,
             isDisabled: shouldDisableButton,
         });
 
@@ -113,72 +116,53 @@ class PluralitySocialConnect extends Component<PluralitySocialConnectProps, Plur
         return true;
     };
 
-    static checkIsWidgetOpen = () => {
-        const isWidgetOpen = localStorage.getItem('isOpen') || '';
-        if (!JSON.parse(isWidgetOpen)) {
-            alert('Please open the Widget first');
-            return false;
-        }
-        return true;
-    };
-
     static getAllAccountsPromise = async () => {
-        if (!this.checkIsWidgetOpen()) return;
         if (!this.checkMetamaskConnection()) return;
         return PluralityApi.sendRequest("getAllAccounts");
     }
 
     static getConnectedAccountPromise = async () => {
-        if (!this.checkIsWidgetOpen()) return;
         if (!this.checkMetamaskConnection()) return;
         return await PluralityApi.sendRequest("getConnectedAccount");
 
     }
 
     static getBalancePromise = () => {
-        if (!this.checkIsWidgetOpen()) return;
         if (!this.checkMetamaskConnection()) return;
         return PluralityApi.sendRequest("getBalance");
     }
 
     static getMessageSignaturePromise = (messageToSign: string) => {
-        if (!this.checkIsWidgetOpen()) return;
         if (!this.checkMetamaskConnection()) return;
         return PluralityApi.sendRequest("getMessageSignature", messageToSign);
     }
 
     static verifyMessageSignaturePromise = (plainMessage: string, signedMessage: string) => {
-        if (!this.checkIsWidgetOpen()) return;
         if (!this.checkMetamaskConnection()) return;
         return PluralityApi.sendRequest("verifyMessageSignature", plainMessage, signedMessage);
     }
 
     static sendTransactionPromise = (addressToSend: string, amount: string) => {
-        if (!this.checkIsWidgetOpen()) return;
         if (!this.checkMetamaskConnection()) return;
         return PluralityApi.sendRequest("sendTransaction", addressToSend, amount);
     }
 
     static getBlockNumberPromise = () => {
-        if (!this.checkIsWidgetOpen()) return;
         if (!this.checkMetamaskConnection()) return;
         return PluralityApi.sendRequest("getBlockNumber");
     }
 
     static getTransactionCountPromise = (address: string) => {
-        if (!this.checkIsWidgetOpen()) return;
         if (!this.checkMetamaskConnection()) return;
         return PluralityApi.sendRequest("getTransactionCount", address);
     }
 
     static readFromContractPromise = (address: string, abi: string, methodName: string) => {
-        if (!this.checkIsWidgetOpen()) return;
         if (!this.checkMetamaskConnection()) return;
         return PluralityApi.sendRequest("readFromContract", address, abi, methodName, '');
     }
 
     static writeToContractPromise = (address: string, abi: string, methodName: string, methodParams: string) => {
-        if (!this.checkIsWidgetOpen()) return;
         if (!this.checkMetamaskConnection()) return;
         return PluralityApi.sendRequest("writeToContract", address, abi, methodName, methodParams);
     }
@@ -193,22 +177,7 @@ class PluralitySocialConnect extends Component<PluralitySocialConnectProps, Plur
     }
 
     componentDidMount() {
-        const isOpen = localStorage.getItem('isOpen');
-
-        if (isOpen === 'true') {
-            this.setState({
-                iframeStyle: {
-                    ...this.state.iframeStyle,
-                    width: '100%',
-                    height: 600,
-                },
-                isOpen: true,
-                isDisabled: shouldDisableButton,
-            });
-        } else {
-            this.openInvisiblePopup();
-        }
-
+        this.openInvisiblePopup();
         window.addEventListener("message", this.handleIframeMessage);
     }
 
@@ -257,6 +226,7 @@ class PluralitySocialConnect extends Component<PluralitySocialConnectProps, Plur
                 <PluralityModal
                     closePlurality={this.closeSocialConnectPopup}
                     isOpen={!this.state.isOpen}
+                    showMask={this.state.showMask}
                     frameUrl={baseUrl}
                     style={this.state.iframeStyle} />
             </div>

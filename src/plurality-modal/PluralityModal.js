@@ -2,7 +2,7 @@ import React from 'react';
 import { Modal } from 'antd';
 import './modalBackground.css'
 
-const PluralityModal = ({ isOpen, closePlurality, frameUrl, style }) => {
+const PluralityModal = ({ isOpen, showMask, closePlurality, frameUrl, style }) => {
 
     const handleOk = () => {
         closePlurality()
@@ -24,6 +24,8 @@ const PluralityModal = ({ isOpen, closePlurality, frameUrl, style }) => {
                 maskClosable={false}
                 width={460}
                 padding={0}
+                mask={showMask}
+                closable={showMask}
                 bodyStyle={{ height: "560px" }}
                 style={{
                     borderRadius: "20px",
