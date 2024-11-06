@@ -3,7 +3,7 @@ import PluralitySocialConnect from './../plurality-modal/PluralitySocialConnect'
 import { GetBalanceDataType, GetBlockNumberDataType, GetTransactionCountDataType, ReadFromContractDataType, SendTransactionDataType, WriteToContractDataType } from '../types';
 
 const SecondPage = () => {
-    const options = { apps: "example" };
+    const options = { apps: "example", clientId: 'c4034665-9aa0-4e00-91fb-7485477166dc' };
     const abi = '[{"inputs":[],"name":"retrieve","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"num","type":"uint256"}],"name":"store","outputs":[],"stateMutability":"nonpayable","type":"function"}]';
 
     const getBalance = async () => {

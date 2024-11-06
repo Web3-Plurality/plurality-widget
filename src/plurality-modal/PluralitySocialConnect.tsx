@@ -9,15 +9,16 @@ const baseUrl = process.env.REACT_APP_WIDGET_BASE_URL
 interface PluralitySocialConnectProps {
     options: {
         apps: string;
+        clientId?: string;
     };
     customization?: {
-        height: string
-        initialBackgroundColor: string
-        initialTextColor: string
-        flipBackgroundColor: string
-        flipTextColor: string
-        width: string
-    }
+        height: string;
+        initialBackgroundColor: string;
+        initialTextColor: string;
+        flipBackgroundColor: string;
+        flipTextColor: string;
+        width: string;
+    };
 }
 
 interface PluralitySocialConnectState {
@@ -25,7 +26,7 @@ interface PluralitySocialConnectState {
     isOpen: boolean;
     showMask: boolean;
     isDisabled: boolean;
-    isMetamaskConnected: boolean
+    isMetamaskConnected: boolean;
 }
 
 const shouldDisableButton: boolean = false;
@@ -53,14 +54,18 @@ class PluralitySocialConnect extends Component<PluralitySocialConnectProps, Plur
         };
     }
 
+    getBaseUrl() {
+        if (!this.props.options.clientId) return baseUrl
+        return `${baseUrl}/rsm?client_id=${this.props.options.clientId}`;
+    }
+
     openSocialConnectPopup = () => {
-        const targetOrigin = baseUrl || '*';
+        const targetOrigin = this.getBaseUrl() || '*';
         this.setState({
             iframeStyle: {
                 ...this.state.iframeStyle,
                 width: '100%',
                 height: 600,
-
             },
             isOpen: true,
             showMask: true,
@@ -79,15 +84,12 @@ class PluralitySocialConnect extends Component<PluralitySocialConnectProps, Plur
                 ...this.state.iframeStyle,
                 width: 0,
                 height: 0,
-
             },
             isOpen: true,
             isDisabled: shouldDisableButton,
         });
         this.performAsyncTasks();
     };
-
-
 
     closeSocialConnectPopup = () => {
         this.setState({
@@ -99,7 +101,6 @@ class PluralitySocialConnect extends Component<PluralitySocialConnectProps, Plur
             isOpen: false,
             isDisabled: shouldDisableButton,
         });
-
     };
 
     static checkMetamaskConnection = () => {
@@ -119,7 +120,6 @@ class PluralitySocialConnect extends Component<PluralitySocialConnectProps, Plur
     static getConnectedAccountPromise = async () => {
         if (!this.checkMetamaskConnection()) return;
         return await PluralityApi.sendRequest("getConnectedAccount");
-
     }
 
     static getBalancePromise = () => {
@@ -168,7 +168,6 @@ class PluralitySocialConnect extends Component<PluralitySocialConnectProps, Plur
     async performAsyncTasks() {
         await this.sleep(1);
         this.closeSocialConnectPopup();
-
     }
 
     componentDidMount() {
@@ -181,6 +180,7 @@ class PluralitySocialConnect extends Component<PluralitySocialConnectProps, Plur
     }
 
     handleIframeMessage = (event: MessageEvent) => {
+        const baseUrl = this.getBaseUrl(); // Get baseUrl from prop or environment variable
         if (event.origin !== baseUrl) return;
 
         const { eventName, data } = event.data;
@@ -197,7 +197,6 @@ class PluralitySocialConnect extends Component<PluralitySocialConnectProps, Plur
             window.localStorage.setItem("smartProfileData", data.profileData)
         }
     };
-
 
     render() {
         return (
@@ -222,7 +221,7 @@ class PluralitySocialConnect extends Component<PluralitySocialConnectProps, Plur
                     closePlurality={this.closeSocialConnectPopup}
                     isOpen={!this.state.isOpen}
                     showMask={this.state.showMask}
-                    frameUrl={baseUrl}
+                    frameUrl={this.getBaseUrl()}
                     style={this.state.iframeStyle} />
             </div>
         );

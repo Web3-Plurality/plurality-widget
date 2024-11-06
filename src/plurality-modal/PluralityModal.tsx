@@ -12,7 +12,6 @@ const PluralityModal = ({ isOpen, showMask, closePlurality, frameUrl, style }) =
         closePlurality()
     };
 
-
     return (
         <>
             <Modal
