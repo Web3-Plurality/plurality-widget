@@ -1,16 +1,11 @@
 import React, { Component } from 'react';
 
-import PluralityModal from './PluralityModal.js';
+import PluralityModal from './PluralityModal';
+import PluralityApi from './PluralityApi'
 import './buttonStyle.css'
-import PluralityApi from './PluralityApi.ts';
 
 
-//for local development
-const baseUrl = "http://localhost:3000";
-
-//for prod development
-// const baseUrl = "https://app.plurality.network";
-
+const baseUrl = process.env.REACT_APP_WIDGET_BASE_URL
 interface PluralitySocialConnectProps {
     options: {
         apps: string;
@@ -59,7 +54,7 @@ class PluralitySocialConnect extends Component<PluralitySocialConnectProps, Plur
     }
 
     openSocialConnectPopup = () => {
-        // localStorage.setItem("hasOpened", 'true')
+        const targetOrigin = baseUrl || '*';
         this.setState({
             iframeStyle: {
                 ...this.state.iframeStyle,
@@ -74,7 +69,7 @@ class PluralitySocialConnect extends Component<PluralitySocialConnectProps, Plur
 
         const iframe = document.getElementById('iframe') as HTMLIFrameElement;
         if (iframe?.contentWindow) {
-            iframe.contentWindow.postMessage({ data: 'refresh' }, baseUrl);
+            iframe.contentWindow.postMessage({ data: 'refresh' }, targetOrigin);
         }
     };
 

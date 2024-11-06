@@ -23,13 +23,11 @@ const PluralityModal = ({ isOpen, showMask, closePlurality, frameUrl, style }) =
                 onCancel={handleCancel}
                 maskClosable={false}
                 width={460}
-                padding={0}
                 mask={showMask}
                 closable={showMask}
-                bodyStyle={{ height: "560px" }}
+                bodyStyle={{ height: "560px", padding: 0 }}
                 style={{
                     borderRadius: "20px",
-                    overflowy: "scroll",
                     backgroundColor: "transparent"
                 }}
                 className='modalCustom'

@@ -1,6 +1,6 @@
 import React from 'react'
-import PluralitySocialConnect from './../plurality-modal/PluralitySocialConnect.tsx'
-import { GetBalanceDataType, GetBlockNumberDataType, GetTransactionCountDataType, ReadFromContractDataType, SendTransactionDataType, WriteToContractDataType } from '../types.ts';
+import PluralitySocialConnect from './../plurality-modal/PluralitySocialConnect'
+import { GetBalanceDataType, GetBlockNumberDataType, GetTransactionCountDataType, ReadFromContractDataType, SendTransactionDataType, WriteToContractDataType } from '../types';
 
 const SecondPage = () => {
     const options = { apps: "example" };

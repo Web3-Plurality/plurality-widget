@@ -1,6 +1,6 @@
 import React from 'react'
-import PluralitySocialConnect from './../plurality-modal/PluralitySocialConnect.tsx'
-import { AllAccountsDataType, ConnectedAccountDataType, SignMessageDataType, VerifySignedMessageDataType } from '../types.ts';
+import PluralitySocialConnect from './../plurality-modal/PluralitySocialConnect'
+import { AllAccountsDataType, ConnectedAccountDataType, SignMessageDataType, VerifySignedMessageDataType } from '../types';
 
 const Home = () => {
     const options = { apps: "example" };
