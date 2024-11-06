@@ -22,7 +22,6 @@ class PluralityApi {
             // Set up the message listener
             function messageListener(event: MessageEvent) {
                 if ((event.data.eventName === eventName || event.data.eventName === 'errorMessage') && event.data.id === messageId) {
-                    console.log("resolving message again", event.data);
                     resolve(event.data);
                     window.removeEventListener('message', messageListener);
                 } else if (event.data.eventName === 'noEthersProvider' && event.data.id === messageId) {
