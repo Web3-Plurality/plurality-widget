@@ -3,11 +3,17 @@ module.exports = {
   plugins: [
     '@semantic-release/commit-analyzer',
     '@semantic-release/release-notes-generator',
-    '@semantic-release/npm',
     [
-      '@semantic-release/exec', {
-        'prepareCmd': 'npm run webpack'
-      }      
+      '@semantic-release/npm',
+      {
+        npmPublish: false, 
+      },
+    ],
+    [
+      '@semantic-release/exec',
+      {
+        prepareCmd: 'npm run webpack',
+      },
     ],
     '@semantic-release/git',
     '@semantic-release/github'
