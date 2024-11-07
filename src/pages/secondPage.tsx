@@ -1,5 +1,6 @@
 import React from 'react'
 import PluralitySocialConnect from './../plurality-modal/PluralitySocialConnect'
+//import PluralitySocialConnect from 'plurality-social-connect'
 import { GetBalanceDataType, GetBlockNumberDataType, GetTransactionCountDataType, ReadFromContractDataType, SendTransactionDataType, WriteToContractDataType } from '../types';
 
 const SecondPage = () => {

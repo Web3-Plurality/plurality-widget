@@ -1,5 +1,6 @@
 import React from 'react'
 import PluralitySocialConnect from './../plurality-modal/PluralitySocialConnect'
+//import PluralitySocialConnect from 'plurality-social-connect'
 import { AllAccountsDataType, ConnectedAccountDataType, SignMessageDataType, VerifySignedMessageDataType } from '../types';
 
 const Home = () => {
