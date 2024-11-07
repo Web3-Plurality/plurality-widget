@@ -12,6 +12,9 @@ jobs:
           git config --global user.email "plurality.web3@gmail.com"
           git config --global user.name "semantic-release-bot"
 
+      - name: Docker Login
+        run: docker login --username ${{ secrets.GHCR_USERNAME }} --password ${{ secrets.GHCR_TOKEN }} ghcr.io
+
       - name: Checkout code
         uses: actions/checkout@v2
         with:
@@ -23,9 +26,23 @@ jobs:
           node-version: 20
 
       - name: Install dependencies
-        run: npm install
+        run: npm install --legacy-peer-deps
+      
+      - name: Prepare Environment files
+        run: |
+          cp .env.production.example .env
 
       - name: Publish to NPM
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: npm publish
+        run: |
+          npm run webpack
+          npm publish
+      
+      - name: Build and Push Docker Image
+        run: |
+          docker build . --file Dockerfile --tag ghcr.io/web3-plurality/plurality-widget-demo:latest \
+          && docker push ghcr.io/web3-plurality/plurality-widget-demo:latest \
+          && docker tag ghcr.io/web3-plurality/plurality-widget-demo:latest ghcr.io/web3-plurality/plurality-widget-demo:${{ env.VERSION }} \
+          && docker push ghcr.io/web3-plurality/plurality-widget-demo:${{ env.VERSION }}
+          
