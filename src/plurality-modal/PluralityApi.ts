@@ -10,7 +10,7 @@ import {
     ReceiverPayload
 } from "./types";
 
-const baseUrl = "http://localhost:3000";
+const baseUrl = process.env.REACT_APP_WIDGET_BASE_URL || '*'
 
 class PluralityApi {
     static sendRequest = (eventName: string, ...args: string[]) => {
