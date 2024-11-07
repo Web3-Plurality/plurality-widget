@@ -1,8 +1,19 @@
 const path = require('path');
+const webpack = require('webpack');
+const dotenv = require('dotenv');
+
+const env = dotenv.config().parsed;
+
+
+const envKeys = Object.keys(env).reduce((prev, next) => {
+  prev[`process.env.${next}`] = JSON.stringify(env[next]);
+  return prev;
+}, {});
+
 
 module.exports = {
   mode: 'production',
-  entry: './src/plurality-modal/PluralitySocialConnect.js',
+  entry: './src/plurality-modal/PluralitySocialConnect.tsx',
   output: {
     path: path.resolve('lib'),
     filename: 'PluralitySocialConnect.js',
@@ -10,21 +21,29 @@ module.exports = {
   },
   module: {
     rules: [
+      // JavaScript and TypeScript rules
+      {
+        test: /\.tsx?$/,
+        exclude: /(node_modules)/,
+        use: 'ts-loader',
+      },
       {
         test: /\.js?$/,
         exclude: /(node_modules)/,
         use: 'babel-loader',
       },
+      // CSS files
       {
         test: /\.css$/,
         use: [
           'style-loader',
-          'css-loader'
+          'css-loader',
         ]
       }
     ],
   },
   resolve: {
+    extensions: ['.ts', '.tsx', '.js', '.json'],
     alias: {
       'react': path.resolve(__dirname, './node_modules/react'),
       'react-dom': path.resolve(__dirname, './node_modules/react-dom'),
@@ -44,5 +63,8 @@ module.exports = {
       amd: "ReactDOM",
       root: "ReactDOM"
     }
-  }
+  },
+  plugins: [
+    new webpack.DefinePlugin(envKeys)
+  ]
 };

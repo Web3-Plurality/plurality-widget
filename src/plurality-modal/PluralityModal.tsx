@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Modal } from 'antd';
 import './modalBackground.css'
 
-const PluralityModal = ({ isOpen, closePlurality, frameUrl, style }) => {
+const PluralityModal = ({ isOpen, showMask, closePlurality, frameUrl, style }) => {
 
     const handleOk = () => {
         closePlurality()
@@ -11,7 +11,6 @@ const PluralityModal = ({ isOpen, closePlurality, frameUrl, style }) => {
     const handleCancel = () => {
         closePlurality()
     };
-
 
     return (
         <>
@@ -22,12 +21,12 @@ const PluralityModal = ({ isOpen, closePlurality, frameUrl, style }) => {
                 onOk={handleOk}
                 onCancel={handleCancel}
                 maskClosable={false}
-                width={452}
-                padding={0}
-                bodyStyle={{ height: "550px" }}
+                width={460}
+                mask={showMask}
+                closable={showMask}
+                bodyStyle={{ height: "560px", padding: 0 }}
                 style={{
                     borderRadius: "20px",
-                    overflow: "hidden",
                     backgroundColor: "transparent"
                 }}
                 className='modalCustom'
@@ -40,6 +39,7 @@ const PluralityModal = ({ isOpen, closePlurality, frameUrl, style }) => {
                             frameBorder="0"
                             id="iframe"
                             style={style}
+                            allow="transparency"
                         ></iframe>
 
                     </div>
