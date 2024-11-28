@@ -4,7 +4,7 @@ import PluralitySocialConnect from './../plurality-modal/PluralitySocialConnect'
 import { AllAccountsDataType, ConnectedAccountDataType, SignMessageDataType, VerifySignedMessageDataType } from '../types';
 
 const Home = () => {
-    const options = { apps: "example", cliendId: '' };
+    const options = { apps: "example", cliendId: '', theme: 'light' };
 
     const getAllAccounts = async () => {
         const response = (await PluralitySocialConnect.getAllAccountsPromise()) as AllAccountsDataType;
@@ -44,7 +44,9 @@ const Home = () => {
 
     return (
 
-        <div>
+        <div style={{
+            padding: "10px"
+        }}>
             <PluralitySocialConnect options={options} />
             <div style={{
                 width: '180px',

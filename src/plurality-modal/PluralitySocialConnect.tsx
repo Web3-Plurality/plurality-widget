@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 
+import './styles.css'
+
 import PluralityModal from './PluralityModal';
 import PluralityApi from './PluralityApi'
-import './buttonStyle.css'
+import ProfileConnectedButton from './components/ConnectedProfile';
+import ProfileButton from './components/profileButton';
 
 
 const baseUrl = process.env.REACT_APP_WIDGET_BASE_URL
@@ -10,6 +13,7 @@ interface PluralitySocialConnectProps {
     options: {
         apps: string;
         clientId?: string;
+        theme: string
     };
     customization?: {
         height: string;
@@ -200,22 +204,12 @@ class PluralitySocialConnect extends Component<PluralitySocialConnectProps, Plur
 
     render() {
         return (
-            <div>
-                <button
-                    disabled={this.state.isDisabled}
-                    className="btn-flip"
-                    onClick={this.openSocialConnectPopup}
-                    data-back={this.state.isMetamaskConnected ? "Connected" : "Social"}
-                    data-front={this.state.isMetamaskConnected ? "Metamask" : "Connect"}
-                    style={{
-                        "--height": this.props?.customization?.height || '40px',
-                        "--initialBackgroundColor": this.props.customization?.initialBackgroundColor || '#AE388B',
-                        "--initialTextColor": this.props?.customization?.initialTextColor || '#ffffff',
-                        "--flipBackgroundColor": this.props.customization?.flipBackgroundColor || '#EFEBE0',
-                        "--flipTextColor": this.props?.customization?.flipTextColor || '#AE388B',
-                        width: this.props?.customization?.width
-                    } as React.CSSProperties}
-                ></button>
+            <>
+                {
+                    this.state.isMetamaskConnected
+                        ? <ProfileConnectedButton theme={this.props.options.theme} />
+                        : <ProfileButton handleClick={this.openSocialConnectPopup} />
+                }
 
                 <PluralityModal
                     closePlurality={this.closeSocialConnectPopup}
@@ -223,7 +217,7 @@ class PluralitySocialConnect extends Component<PluralitySocialConnectProps, Plur
                     showMask={this.state.showMask}
                     frameUrl={this.getBaseUrl()}
                     style={this.state.iframeStyle} />
-            </div>
+            </>
         );
     }
 }
