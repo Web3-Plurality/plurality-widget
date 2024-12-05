@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import ProfileIcon from '../../assets/profileIcon';
 import { CaretDownOutlined, CaretUpOutlined } from '@ant-design/icons';
 import ProfileIconSmall from '../../assets/profileIconSmall';
-import ProfileStars from '../../assets/stars';
+import ProfileStars from '../../assets/profileStar';
 
 const ProfileWrapper = styled(Button) <{ $isOpen: boolean, $theme: string }>`
   display: flex;

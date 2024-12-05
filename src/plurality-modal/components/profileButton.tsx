@@ -41,7 +41,7 @@ const ProfileButton = ({ handleClick }: { handleClick: () => void }) => {
             type="default"
             onClick={handleClick}
         >
-            <span>Connect Metamask</span>
+            <span>Connect Profile</span>
         </SocialButtonWrapper>
     )
 }

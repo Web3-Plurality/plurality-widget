@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import ProfileIcon from '../../assets/profileIcon';
 import { CaretDownOutlined, CaretUpOutlined } from '@ant-design/icons';
 import ProfileIconSmall from '../../assets/profileIconSmall';
-import ProfileStars from '../../assets/stars';
+import ProfileStars from '../../assets/profileStar';
 
 const ConnectedButtonWrapper = styled(Button) <{ $isOpen: boolean, $theme: string }>`
   width: 180px;
@@ -81,12 +81,25 @@ const StyledMenu = styled(Menu) <{ $theme: string }>`
   }
 `;
 
+const baseUrl = process.env.REACT_APP_WIDGET_BASE_URL || '*'
+
 const ProfileConnectedButton = ({ theme }: { theme: string }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
+
+  const handleLogout = () => {
+    const iframe = document.getElementById('iframe') as HTMLIFrameElement;
+    const isMetamaskConnected = localStorage.getItem('metamsk')
+    const connectedPlatform = isMetamaskConnected ? 'metamask' : 'lit'
+    if (iframe?.contentWindow) {
+      const messageId = `msg-${Date.now()}`;
+      const payload = { id: messageId, type: 'logoutRequest', platform: connectedPlatform };
+      iframe.contentWindow.postMessage(payload, baseUrl);
+    }
+  }
 
   const menu = (
     <StyledMenu $theme={theme}>
@@ -116,7 +129,7 @@ const ProfileConnectedButton = ({ theme }: { theme: string }) => {
       </Menu.Item>
       <hr />
       <Menu.Item key="5" style={{ marginTop: '10px', marginBottom: '10px' }}>
-        <span>Logout</span>
+        <span onClick={handleLogout}>Logout</span>
       </Menu.Item>
     </StyledMenu>
   );

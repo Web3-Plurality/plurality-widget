@@ -31,6 +31,7 @@ interface PluralitySocialConnectState {
     showMask: boolean;
     isDisabled: boolean;
     isMetamaskConnected: boolean;
+    isLitConnected: boolean;
 }
 
 const shouldDisableButton: boolean = false;
@@ -54,7 +55,8 @@ class PluralitySocialConnect extends Component<PluralitySocialConnectProps, Plur
             isOpen: false,
             showMask: false,
             isDisabled: false,
-            isMetamaskConnected: false
+            isMetamaskConnected: false,
+            isLitConnected: false
         };
     }
 
@@ -186,7 +188,7 @@ class PluralitySocialConnect extends Component<PluralitySocialConnectProps, Plur
     handleIframeMessage = (event: MessageEvent) => {
         const baseUrl = this.getBaseUrl(); // Get baseUrl from prop or environment variable
         if (event.origin !== baseUrl) return;
-
+        console.log("Event data: ", event.data)
         const { eventName, data } = event.data;
         if (eventName === "metamaskConnection") {
             this.setState({ isMetamaskConnected: data.isConnected })
@@ -194,6 +196,14 @@ class PluralitySocialConnect extends Component<PluralitySocialConnectProps, Plur
                 localStorage.setItem('metamask', 'true')
             } else {
                 localStorage.setItem('metamask', 'false')
+            }
+        } else if (eventName === "litConnection") {
+            console.log("Inside")
+            this.setState({ isLitConnected: data.isConnected })
+            if (data?.isConnected) {
+                localStorage.setItem('lit', 'true')
+            } else {
+                localStorage.setItem('lit', 'false')
             }
         }
 
@@ -206,7 +216,7 @@ class PluralitySocialConnect extends Component<PluralitySocialConnectProps, Plur
         return (
             <>
                 {
-                    this.state.isMetamaskConnected
+                    this.state.isMetamaskConnected || this.state.isLitConnected
                         ? <ProfileConnectedButton theme={this.props.options.theme} />
                         : <ProfileButton handleClick={this.openSocialConnectPopup} />
                 }
