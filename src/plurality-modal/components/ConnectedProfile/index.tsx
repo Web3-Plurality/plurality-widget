@@ -92,7 +92,7 @@ const ProfileConnectedButton = ({ theme }: { theme: string }) => {
 
   const handleLogout = () => {
     const iframe = document.getElementById('iframe') as HTMLIFrameElement;
-    const isMetamaskConnected = localStorage.getItem('metamsk')
+    const isMetamaskConnected = localStorage.getItem('metamask')
     const connectedPlatform = isMetamaskConnected ? 'metamask' : 'lit'
     if (iframe?.contentWindow) {
       const messageId = `msg-${Date.now()}`;
