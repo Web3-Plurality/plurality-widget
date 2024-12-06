@@ -3,7 +3,6 @@ import { Button, Menu, Dropdown } from 'antd';
 import styled from 'styled-components';
 import ProfileIcon from '../../assets/profileIcon';
 import { CaretDownOutlined, CaretUpOutlined } from '@ant-design/icons';
-import ProfileIconSmall from '../../assets/profileIconSmall';
 import ProfileStars from '../../assets/profileStar';
 
 const ConnectedButtonWrapper = styled(Button) <{ $isOpen: boolean, $theme: string }>`
@@ -25,6 +24,23 @@ const ConnectedButtonWrapper = styled(Button) <{ $isOpen: boolean, $theme: strin
   padding: 25px 10px !important;
   /* border: 1px solid gray; */
 
+  .avatar {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
   .anticon-caret-down,  .anticon-caret-up {
     color: lightgray !important;
   }
@@ -45,8 +61,11 @@ const StyledMenu = styled(Menu) <{ $theme: string }>`
   width: 270px;
   max-width: 100%;
   border-radius: 25px !important;
-  /* padding: 0; */
 
+  span {
+    color: #545454 !important;
+  }
+    
   .ant-dropdown-menu-item {
     padding: 0 15px !important;
     font-family: 'Lexend';
@@ -57,7 +76,7 @@ const StyledMenu = styled(Menu) <{ $theme: string }>`
       display: flex;
       align-items: center;
       justify-content: space-between;
-
+      padding-top: 10px;
       span {
         font-family: 'Lexend';
         font-size: 16px;
@@ -83,7 +102,7 @@ const StyledMenu = styled(Menu) <{ $theme: string }>`
 
 const baseUrl = process.env.REACT_APP_WIDGET_BASE_URL || '*'
 
-const ProfileConnectedButton = ({ theme }: { theme: string }) => {
+const ProfileConnectedButton = ({ theme, name, icon, ratings }: { theme: string, name: string, icon: string, ratings: number }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const toggleDropdown = () => {
@@ -101,19 +120,19 @@ const ProfileConnectedButton = ({ theme }: { theme: string }) => {
     }
   }
 
+  const renderRatings = () => {
+    return Array.from({ length: ratings }, (_, i) => <ProfileStars />);
+  }
+
   const menu = (
     <StyledMenu $theme={theme}>
       <Menu.Item key="1">
         <div className='basic-info'>
           <div className='basic-info-details'>
-            <ProfileIconSmall />
-            <span>John Doe</span>
+            <span>{name}</span>
           </div>
           <div className='stars'>
-            <ProfileStars />
-            <ProfileStars />
-            <ProfileStars />
-            <ProfileStars />
+            {renderRatings()}
           </div>
         </div>
       </Menu.Item>
@@ -145,7 +164,9 @@ const ProfileConnectedButton = ({ theme }: { theme: string }) => {
         overlayClassName="custom-dropdown"
       >
         <ConnectedButtonWrapper $isOpen={isDropdownOpen} $theme={theme}>
-          <ProfileIcon />
+          <div className='avatar'>
+            {icon ? <img src={icon} alt='profile-icon' /> : <ProfileIcon />}
+          </div>
           {isDropdownOpen ? <CaretUpOutlined /> : <CaretDownOutlined />}
         </ConnectedButtonWrapper>
       </Dropdown>

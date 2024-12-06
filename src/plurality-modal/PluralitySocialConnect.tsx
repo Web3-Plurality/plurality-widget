@@ -25,6 +25,12 @@ interface PluralitySocialConnectProps {
     };
 }
 
+interface User {
+    username: string;
+    profileIcon: string;
+    rating: number;
+}
+
 interface PluralitySocialConnectState {
     iframeStyle: React.CSSProperties;
     isOpen: boolean;
@@ -32,6 +38,7 @@ interface PluralitySocialConnectState {
     isDisabled: boolean;
     isMetamaskConnected: boolean;
     isLitConnected: boolean;
+    userData: User;
 }
 
 const shouldDisableButton: boolean = false;
@@ -56,7 +63,12 @@ class PluralitySocialConnect extends Component<PluralitySocialConnectProps, Plur
             showMask: false,
             isDisabled: false,
             isMetamaskConnected: false,
-            isLitConnected: false
+            isLitConnected: false,
+            userData: {
+                username: '',
+                profileIcon: '',
+                rating: 0
+            }
         };
     }
 
@@ -205,6 +217,16 @@ class PluralitySocialConnect extends Component<PluralitySocialConnectProps, Plur
             } else {
                 localStorage.setItem('lit', 'false')
             }
+        } else if (eventName === "userData") {
+            console.log("User Data");
+            this.setState((prevState) => ({
+                userData: {
+                    ...prevState.userData,
+                    username: data.name,
+                    profileIcon: data.avatar,
+                    rating: data.rating
+                }
+            }));
         }
 
         if (eventName === "smartProfileData") {
@@ -217,7 +239,12 @@ class PluralitySocialConnect extends Component<PluralitySocialConnectProps, Plur
             <>
                 {
                     this.state.isMetamaskConnected || this.state.isLitConnected
-                        ? <ProfileConnectedButton theme={this.props.options.theme} />
+                        ? <ProfileConnectedButton
+                            theme={this.props.options.theme}
+                            icon={this.state.userData.profileIcon}
+                            name={this.state.userData.username}
+                            ratings={this.state.userData.rating}
+                        />
                         : <ProfileButton handleClick={this.openSocialConnectPopup} />
                 }
 
