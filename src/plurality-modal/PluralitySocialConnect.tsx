@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 
+import './styles.css'
+
 import PluralityModal from './PluralityModal';
 import PluralityApi from './PluralityApi'
-import './buttonStyle.css'
+import ProfileConnectedButton from './components/ConnectedProfile';
+import ProfileButton from './components/profileButton';
 
 
 const baseUrl = process.env.REACT_APP_WIDGET_BASE_URL
@@ -10,6 +13,7 @@ interface PluralitySocialConnectProps {
     options: {
         apps: string;
         clientId?: string;
+        theme: string
     };
     customization?: {
         height: string;
@@ -21,12 +25,20 @@ interface PluralitySocialConnectProps {
     };
 }
 
+interface User {
+    username: string;
+    profileIcon: string;
+    rating: number;
+}
+
 interface PluralitySocialConnectState {
     iframeStyle: React.CSSProperties;
     isOpen: boolean;
     showMask: boolean;
     isDisabled: boolean;
     isMetamaskConnected: boolean;
+    isLitConnected: boolean;
+    userData: User;
 }
 
 const shouldDisableButton: boolean = false;
@@ -50,7 +62,13 @@ class PluralitySocialConnect extends Component<PluralitySocialConnectProps, Plur
             isOpen: false,
             showMask: false,
             isDisabled: false,
-            isMetamaskConnected: false
+            isMetamaskConnected: false,
+            isLitConnected: false,
+            userData: {
+                username: '',
+                profileIcon: '',
+                rating: 0
+            }
         };
     }
 
@@ -182,7 +200,7 @@ class PluralitySocialConnect extends Component<PluralitySocialConnectProps, Plur
     handleIframeMessage = (event: MessageEvent) => {
         const baseUrl = this.getBaseUrl(); // Get baseUrl from prop or environment variable
         if (event.origin !== baseUrl) return;
-
+        console.log("Event data: ", event.data)
         const { eventName, data } = event.data;
         if (eventName === "metamaskConnection") {
             this.setState({ isMetamaskConnected: data.isConnected })
@@ -191,6 +209,24 @@ class PluralitySocialConnect extends Component<PluralitySocialConnectProps, Plur
             } else {
                 localStorage.setItem('metamask', 'false')
             }
+        } else if (eventName === "litConnection") {
+            console.log("Inside")
+            this.setState({ isLitConnected: data.isConnected })
+            if (data?.isConnected) {
+                localStorage.setItem('lit', 'true')
+            } else {
+                localStorage.setItem('lit', 'false')
+            }
+        } else if (eventName === "userData") {
+            console.log("User Data");
+            this.setState((prevState) => ({
+                userData: {
+                    ...prevState.userData,
+                    username: data.name,
+                    profileIcon: data.avatar,
+                    rating: data.rating
+                }
+            }));
         }
 
         if (eventName === "smartProfileData") {
@@ -200,22 +236,17 @@ class PluralitySocialConnect extends Component<PluralitySocialConnectProps, Plur
 
     render() {
         return (
-            <div>
-                <button
-                    disabled={this.state.isDisabled}
-                    className="btn-flip"
-                    onClick={this.openSocialConnectPopup}
-                    data-back={this.state.isMetamaskConnected ? "Connected" : "Social"}
-                    data-front={this.state.isMetamaskConnected ? "Metamask" : "Connect"}
-                    style={{
-                        "--height": this.props?.customization?.height || '40px',
-                        "--initialBackgroundColor": this.props.customization?.initialBackgroundColor || '#AE388B',
-                        "--initialTextColor": this.props?.customization?.initialTextColor || '#ffffff',
-                        "--flipBackgroundColor": this.props.customization?.flipBackgroundColor || '#EFEBE0',
-                        "--flipTextColor": this.props?.customization?.flipTextColor || '#AE388B',
-                        width: this.props?.customization?.width
-                    } as React.CSSProperties}
-                ></button>
+            <>
+                {
+                    this.state.isMetamaskConnected || this.state.isLitConnected
+                        ? <ProfileConnectedButton
+                            theme={this.props.options.theme}
+                            icon={this.state.userData.profileIcon}
+                            name={this.state.userData.username}
+                            ratings={this.state.userData.rating}
+                        />
+                        : <ProfileButton handleClick={this.openSocialConnectPopup} />
+                }
 
                 <PluralityModal
                     closePlurality={this.closeSocialConnectPopup}
@@ -223,7 +254,7 @@ class PluralitySocialConnect extends Component<PluralitySocialConnectProps, Plur
                     showMask={this.state.showMask}
                     frameUrl={this.getBaseUrl()}
                     style={this.state.iframeStyle} />
-            </div>
+            </>
         );
     }
 }
