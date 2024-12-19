@@ -147,8 +147,8 @@ const ProfileConnectedButton = ({ theme, name, icon, ratings }: { theme: string,
         <span>Settings</span>
       </Menu.Item>
       <hr />
-      <Menu.Item key="5" style={{ marginTop: '10px', marginBottom: '10px' }}>
-        <span onClick={handleLogout}>Logout</span>
+      <Menu.Item key="5" style={{ marginTop: '10px', marginBottom: '10px' }} onClick={handleLogout}>
+        <span>Logout</span>
       </Menu.Item>
     </StyledMenu>
   );
