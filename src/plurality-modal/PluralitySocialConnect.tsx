@@ -121,62 +121,62 @@ class PluralitySocialConnect extends Component<PluralitySocialConnectProps, Plur
         });
     };
 
-    static checkMetamaskConnection = () => {
-        const isConnected = localStorage.getItem('metamask') || '';
+    static checkLitConnection = () => {
+        const isConnected = localStorage.getItem('lit') || 'false';
         if (!JSON.parse(isConnected)) {
-            alert('Connect Metamask first');
+            alert('Connect Profile first');
             return false;
         }
         return true;
     };
 
     static getAllAccountsPromise = async () => {
-        if (!this.checkMetamaskConnection()) return;
+        if (!this.checkLitConnection()) return;
         return PluralityApi.sendRequest("getAllAccounts");
     }
 
     static getConnectedAccountPromise = async () => {
-        if (!this.checkMetamaskConnection()) return;
+        if (!this.checkLitConnection()) return;
         return await PluralityApi.sendRequest("getConnectedAccount");
     }
 
     static getBalancePromise = () => {
-        if (!this.checkMetamaskConnection()) return;
+        if (!this.checkLitConnection()) return;
         return PluralityApi.sendRequest("getBalance");
     }
 
     static getMessageSignaturePromise = (messageToSign: string) => {
-        if (!this.checkMetamaskConnection()) return;
+        if (!this.checkLitConnection()) return;
         return PluralityApi.sendRequest("getMessageSignature", messageToSign);
     }
 
     static verifyMessageSignaturePromise = (plainMessage: string, signedMessage: string) => {
-        if (!this.checkMetamaskConnection()) return;
+        if (!this.checkLitConnection()) return;
         return PluralityApi.sendRequest("verifyMessageSignature", plainMessage, signedMessage);
     }
 
     static sendTransactionPromise = (addressToSend: string, amount: string) => {
-        if (!this.checkMetamaskConnection()) return;
+        if (!this.checkLitConnection()) return;
         return PluralityApi.sendRequest("sendTransaction", addressToSend, amount);
     }
 
     static getBlockNumberPromise = () => {
-        if (!this.checkMetamaskConnection()) return;
+        if (!this.checkLitConnection()) return;
         return PluralityApi.sendRequest("getBlockNumber");
     }
 
     static getTransactionCountPromise = (address: string) => {
-        if (!this.checkMetamaskConnection()) return;
+        if (!this.checkLitConnection()) return;
         return PluralityApi.sendRequest("getTransactionCount", address);
     }
 
     static readFromContractPromise = (address: string, abi: string, methodName: string) => {
-        if (!this.checkMetamaskConnection()) return;
+        if (!this.checkLitConnection()) return;
         return PluralityApi.sendRequest("readFromContract", address, abi, methodName, '');
     }
 
     static writeToContractPromise = (address: string, abi: string, methodName: string, methodParams: string) => {
-        if (!this.checkMetamaskConnection()) return;
+        if (!this.checkLitConnection()) return;
         return PluralityApi.sendRequest("writeToContract", address, abi, methodName, methodParams);
     }
 
