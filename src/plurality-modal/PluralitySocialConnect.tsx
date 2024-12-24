@@ -253,6 +253,10 @@ export class PluralitySocialConnect extends Component<PluralitySocialConnectProp
                     rating: data.rating
                 }
             }));
+        } else if (eventName === "consentData") {
+            if (data?.consent) {
+                this.closeSocialConnectPopup();
+            }
         }
 
         if (eventName === "smartProfileData") {
@@ -270,6 +274,7 @@ export class PluralitySocialConnect extends Component<PluralitySocialConnectProp
                             icon={this.state.userData.profileIcon}
                             name={this.state.userData.username}
                             ratings={this.state.userData.rating}
+                            handleClick={this.openSocialConnectPopup}
                         />
                         : <ProfileButton handleClick={this.openSocialConnectPopup} />
                 }
