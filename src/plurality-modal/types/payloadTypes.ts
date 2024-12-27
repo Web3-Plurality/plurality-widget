@@ -63,3 +63,15 @@ export interface TxOptionsPayload extends MessagePayload {
 }
 
 export type Payload = BasePayload | MessagePayload | MessageSignaturePayload;
+
+interface Scores {
+    scoreType: string
+    scoreValue: number
+}
+export interface User {
+    username: string;
+    profileIcon: string;
+    ratings: number;
+    scores: Scores[]
+    consent: boolean
+}

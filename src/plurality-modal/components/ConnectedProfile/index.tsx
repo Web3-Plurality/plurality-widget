@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import ProfileIcon from '../../assets/profileIcon';
 import { CaretDownOutlined, CaretUpOutlined } from '@ant-design/icons';
 import ProfileStars from '../../assets/profileStar';
+import { User } from '../../types';
 
 const ConnectedButtonWrapper = styled(Button) <{ $isOpen: boolean, $theme: string }>`
   width: 180px;
@@ -103,8 +104,10 @@ const StyledMenu = styled(Menu) <{ $theme: string }>`
 
 const baseUrl = process.env.REACT_APP_WIDGET_BASE_URL || '*'
 
-const ProfileConnectedButton = ({ theme, name, icon, ratings, handleClick }: { theme: string, name: string, icon: string, ratings: number, handleClick: () => void }) => {
+const ProfileConnectedButton = ({ theme, userData, handleClick }: { theme: string, userData: User, handleClick: () => void }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  const { profileIcon: icon, username: name, ratings, consent } = userData
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
@@ -148,10 +151,10 @@ const ProfileConnectedButton = ({ theme, name, icon, ratings, handleClick }: { t
         </div>
       </Menu.Item>
       <hr />
-      <Menu.Item key="2" style={{ marginTop: '10px' }} onClick={() => goToProfile('profile')}>
+      <Menu.Item key="2" style={{ marginTop: '10px' }} onClick={() => goToProfile('profile')} disabled={!consent}>
         <span>Profile</span>
       </Menu.Item>
-      <Menu.Item key="3" style={{ marginTop: '10px', color: 'red !important' }} disabled>
+      <Menu.Item key="3" style={{ marginTop: '10px' }} disabled>
         <span style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: 'lightgray !important' }}>
           Wallet
           <span style={{
