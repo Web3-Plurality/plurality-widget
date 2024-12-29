@@ -2,12 +2,16 @@ import {
     AbiPayload,
     AddressPayload,
     AmountPayload,
+    ChainIdPayload,
     MessagePayload,
     MessageSignaturePayload,
     MethodNamePayload,
     MethodParamsPayload,
     Payload,
-    ReceiverPayload
+    RawTransactionPayload,
+    ReceiverPayload,
+    RpcPayload,
+    TxOptionsPayload
 } from "./types";
 
 const baseUrl = process.env.REACT_APP_WIDGET_BASE_URL || '*'
@@ -39,12 +43,13 @@ class PluralityApi {
                 const payload: Payload = { id: messageId, type: 'metamaskRequest', method: eventName, isWidgetOpen: isOpen || 'false' };
 
                 if (args.length > 0) {
-                    if (eventName === 'sendTransaction') (payload as ReceiverPayload).sendTo = args[0];
+                    if (eventName === 'sendTransaction') (payload as RawTransactionPayload).raw_transaction = args[0];
                     else if (eventName === 'getTransactionCount') (payload as AddressPayload).address = args[0]
+                    else if (eventName === 'switchNetwork') (payload as RpcPayload).rpc = args[0]
                     else (payload as MessagePayload).message = args[0];
                 }
                 if (args.length > 1) {
-                    if (eventName === 'sendTransaction') (payload as AmountPayload).amount = args[1];
+                    if (eventName === 'switchNetwork') (payload as ChainIdPayload).chain_id = args[1]
                     else (payload as MessageSignaturePayload).signature = args[1];
                 }
                 if (args.length > 2) {
@@ -52,6 +57,9 @@ class PluralityApi {
                     (payload as AbiPayload).abi = args[1];
                     (payload as MethodNamePayload).method_name = args[2];
                     (payload as MethodParamsPayload).method_params = args[3];
+                    (payload as RpcPayload).rpc = args[4];
+                    (payload as ChainIdPayload).chain_id = args[5];
+                    (payload as TxOptionsPayload).options = args[6];
                 }
 
                 iframe.contentWindow.postMessage(payload, baseUrl);
