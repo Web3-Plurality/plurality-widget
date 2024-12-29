@@ -12,8 +12,8 @@ interface PluralityContextType {
     awaitSendTransaction: (address: string, amount: string) => Promise<unknown>
     awaitGetBlockNumber: () => Promise<unknown>
     awaitGetTransactionCount: (address: string) => Promise<unknown>
-    awaitReadFromContract: (address: string, abi: string, type: string) => Promise<unknown>
-    awaitWriteToContract: (address: string, abi: string, type: string, params: string) => Promise<unknown>
+    awaitReadFromContract: (address: string, abi: string, type: string, params: any, rpc: string, chainId: string) => Promise<unknown>
+    awaitWriteToContract: (address: string, abi: string, type: string, params: any, rpc:string, chainId: string) => Promise<unknown>
 }
 
 const PluralityContext = createContext<PluralityContextType | null>(null);
@@ -60,13 +60,13 @@ export const PluralityProvider = ({ children }: { children: ReactNode }) => {
         return resp
     };
 
-    const awaitReadFromContract = async (address: string, abi: string, type: string) => {
-        const resp = await PluralitySocialConnect.readFromContractPromise(address, abi, type);
+    const awaitReadFromContract = async (address: string, abi: string, type: string, params: any, rpc: string, chainId: string) => {
+        const resp = await PluralitySocialConnect.readFromContractPromise(address, abi, type, params, rpc, chainId);
         return resp
     };
 
-    const awaitWriteToContract = async (address: string, abi: string, type: string, params: string) => {
-        const resp = await PluralitySocialConnect.writeToContractPromise(address, abi, type, params);
+    const awaitWriteToContract = async (address: string, abi: string, type: string, params: string, rpc: string, chainId: string) => {
+        const resp = await PluralitySocialConnect.writeToContractPromise(address, abi, type, params, rpc, chainId);
         return resp
     };
 

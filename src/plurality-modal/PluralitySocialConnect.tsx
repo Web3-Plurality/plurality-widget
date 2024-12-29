@@ -170,14 +170,19 @@ class PluralitySocialConnect extends Component<PluralitySocialConnectProps, Plur
         return PluralityApi.sendRequest("getTransactionCount", address);
     }
 
-    static readFromContractPromise = (address: string, abi: string, methodName: string) => {
+    static readFromContractPromise = (address: string, abi: string, methodName: string, methodParams: string, rpc: string = '', chainId: string = '') => {
         if (!this.checkLitConnection()) return;
-        return PluralityApi.sendRequest("readFromContract", address, abi, methodName, '');
+        return PluralityApi.sendRequest("readFromContract", address, abi, methodName, methodParams, rpc, chainId);
     }
 
-    static writeToContractPromise = (address: string, abi: string, methodName: string, methodParams: string) => {
+    static writeToContractPromise = (address: string, abi: string, methodName: string, methodParams: string, rpc: string = '', chainId: string = '') => {
         if (!this.checkLitConnection()) return;
-        return PluralityApi.sendRequest("writeToContract", address, abi, methodName, methodParams);
+        return PluralityApi.sendRequest("writeToContract", address, abi, methodName, methodParams, rpc, chainId);
+    }
+
+    static switchNetwork = (rpc: string, chainId: string) => {
+        if (!this.checkLitConnection()) return;
+        return PluralityApi.sendRequest("switchNetwork", rpc, chainId);
     }
 
     sleep = (ms: number) => {

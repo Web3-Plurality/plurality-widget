@@ -38,7 +38,15 @@ export interface MethodNamePayload extends MessagePayload {
 }
 
 export interface MethodParamsPayload extends MessagePayload {
-    method_params: string;
+    method_params: any;
+}
+
+export interface RpcPayload extends MessagePayload {
+    rpc: string;
+}
+
+export interface ChainIdPayload extends MessagePayload {
+    chain_id: string;
 }
 
 export type Payload = BasePayload | MessagePayload | MessageSignaturePayload;
