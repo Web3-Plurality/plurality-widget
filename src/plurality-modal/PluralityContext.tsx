@@ -9,11 +9,11 @@ interface PluralityContextType {
     awaitGetMessageSignature: (message: string) => Promise<unknown>
     awaitVerifyMessageSignature: (message: string, address: string) => Promise<unknown>
     awaitGetBalanace: () => Promise<unknown>
-    awaitSendTransaction: (address: string, amount: string) => Promise<unknown>
+    awaitSendTransaction: (rawTx: string) => Promise<unknown>
     awaitGetBlockNumber: () => Promise<unknown>
     awaitGetTransactionCount: (address: string) => Promise<unknown>
     awaitReadFromContract: (address: string, abi: string, type: string, params: any, rpc: string, chainId: string) => Promise<unknown>
-    awaitWriteToContract: (address: string, abi: string, type: string, params: any, rpc:string, chainId: string) => Promise<unknown>
+    awaitWriteToContract: (address: string, abi: string, type: string, params: any, rpc:string, chainId: string, options) => Promise<unknown>
 }
 
 const PluralityContext = createContext<PluralityContextType | null>(null);
@@ -45,8 +45,8 @@ export const PluralityProvider = ({ children }: { children: ReactNode }) => {
         return resp;
     };
 
-    const awaitSendTransaction = async (address: string, amount: string) => {
-        const resp = await PluralitySocialConnect.sendTransactionPromise(address, amount);
+    const awaitSendTransaction = async (rawTx: string) => {
+        const resp = await PluralitySocialConnect.sendTransactionPromise(rawTx);
         return resp;
     };
 
@@ -65,8 +65,8 @@ export const PluralityProvider = ({ children }: { children: ReactNode }) => {
         return resp
     };
 
-    const awaitWriteToContract = async (address: string, abi: string, type: string, params: string, rpc: string, chainId: string) => {
-        const resp = await PluralitySocialConnect.writeToContractPromise(address, abi, type, params, rpc, chainId);
+    const awaitWriteToContract = async (address: string, abi: string, type: string, params: string, rpc: string, chainId: string, options: string) => {
+        const resp = await PluralitySocialConnect.writeToContractPromise(address, abi, type, params, rpc, chainId, options);
         return resp
     };
 

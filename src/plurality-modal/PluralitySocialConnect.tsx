@@ -155,9 +155,9 @@ class PluralitySocialConnect extends Component<PluralitySocialConnectProps, Plur
         return PluralityApi.sendRequest("verifyMessageSignature", plainMessage, signedMessage);
     }
 
-    static sendTransactionPromise = (addressToSend: string, amount: string) => {
+    static sendTransactionPromise = (rawTx: string) => {
         if (!this.checkLitConnection()) return;
-        return PluralityApi.sendRequest("sendTransaction", addressToSend, amount);
+        return PluralityApi.sendRequest("sendTransaction", rawTx);
     }
 
     static getBlockNumberPromise = () => {
@@ -175,14 +175,19 @@ class PluralitySocialConnect extends Component<PluralitySocialConnectProps, Plur
         return PluralityApi.sendRequest("readFromContract", address, abi, methodName, methodParams, rpc, chainId);
     }
 
-    static writeToContractPromise = (address: string, abi: string, methodName: string, methodParams: string, rpc: string = '', chainId: string = '') => {
+    static writeToContractPromise = (address: string, abi: string, methodName: string, methodParams: string, rpc: string = '', chainId: string = '', options: string) => {
         if (!this.checkLitConnection()) return;
-        return PluralityApi.sendRequest("writeToContract", address, abi, methodName, methodParams, rpc, chainId);
+        return PluralityApi.sendRequest("writeToContract", address, abi, methodName, methodParams, rpc, chainId, options);
     }
 
     static switchNetwork = (rpc: string, chainId: string) => {
         if (!this.checkLitConnection()) return;
         return PluralityApi.sendRequest("switchNetwork", rpc, chainId);
+    }
+    
+    static fetchNetwork = () => {
+        if (!this.checkLitConnection()) return;
+        return PluralityApi.sendRequest("fetchNetwork");
     }
 
     sleep = (ms: number) => {
