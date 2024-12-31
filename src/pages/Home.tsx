@@ -10,7 +10,7 @@ const Home = () => {
         const response = (await PluralitySocialConnect.getAllAccountsPromise()) as AllAccountsDataType;
         if (response) {
             const allAccounts = response.data;
-            alert(`All Accounts: ${allAccounts[0]?.address}`)
+            alert(`All Accounts: ${allAccounts[0]}`)
             return allAccounts[0]?.address;
         }
     }
@@ -19,7 +19,7 @@ const Home = () => {
         const response = (await PluralitySocialConnect.getConnectedAccountPromise()) as ConnectedAccountDataType;
         if (response) {
             const connectedAccount = response.data;
-            alert(`Connected Account: ${connectedAccount?.address}`)
+            alert(`Connected Account: ${connectedAccount}`)
             return connectedAccount?.address;
         }
     }
@@ -58,7 +58,7 @@ const Home = () => {
                 <button onClick={() => getAllAccounts()}>Get All Accounts</button>
                 <button onClick={() => getConnectedAccount()}>Get Connected Account</button>
                 <button onClick={() => getMessageSignature("Example `personal_sign` message.")}>Sign Message</button>
-                <button onClick={() => getVerifyMessageData("Example `personal_sign` message.", "0xa1379711716d214c84c146bbaa9d03d77895526b8620bcae67a76f824be6fd3a43795645a31f758eaed39ee6aa5490a979233711d4e9d6a2e30fa09a5e9c808a1b")}>Verify Message</button>
+                <button onClick={() => getVerifyMessageData("Example `personal_sign` message.", "0x4b0a58d64ef2a4a5b6f60cf0b5f7decfec842e1bca35fba261660770d997297a66dad78ba2b2bd273f7de8130178bc93ddd44be3bafe1a94a8fd81a16a89cb0e1c")}>Verify Message</button>
 
             </div>
 

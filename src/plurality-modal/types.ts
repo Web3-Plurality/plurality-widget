@@ -13,6 +13,10 @@ export interface ReceiverPayload extends BasePayload {
     sendTo: string;
 }
 
+export interface RawTransactionPayload extends BasePayload {
+    raw_transaction: string;
+}
+
 export interface AmountPayload extends BasePayload {
     amount: string;
 }
@@ -38,7 +42,19 @@ export interface MethodNamePayload extends MessagePayload {
 }
 
 export interface MethodParamsPayload extends MessagePayload {
-    method_params: string;
+    method_params: any;
+}
+
+export interface RpcPayload extends MessagePayload {
+    rpc: string;
+}
+
+export interface ChainIdPayload extends MessagePayload {
+    chain_id: string;
+}
+
+export interface TxOptionsPayload extends MessagePayload {
+    options
 }
 
 export type Payload = BasePayload | MessagePayload | MessageSignaturePayload;
