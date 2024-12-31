@@ -15,8 +15,8 @@ const SecondPage = () => {
     })
     const txParams = JSON.stringify([8])
     const txOptions = JSON.stringify({gasLimit: 2000000})
-    const getBalance = async () => {
-        const response = (await PluralitySocialConnect.getBalancePromise()) as GetBalanceDataType;
+    const getBalance = async (rpc: string, chainId: string) => {
+        const response = (await PluralitySocialConnect.getBalancePromise(rpc, chainId)) as GetBalanceDataType;
         if (response) {
             const getBalance = response.data;
             alert(`Balance: ${getBalance}`)
@@ -24,8 +24,8 @@ const SecondPage = () => {
         }
     }
 
-    const sendTransaction = async (rawTx: string) => {
-        const response = (await PluralitySocialConnect.sendTransactionPromise(rawTx)) as SendTransactionDataType;
+    const sendTransaction = async (rawTx: string, rpc: string, chainId: string) => {
+        const response = (await PluralitySocialConnect.sendTransactionPromise(rawTx, rpc, chainId)) as SendTransactionDataType;
         if (response) {
             const sendTransactionData = response.data;
             alert(`Send Transaction Response: ${sendTransactionData}`)
@@ -33,8 +33,8 @@ const SecondPage = () => {
         }
     }
 
-    const getBlockNumber = async () => {
-        const response = (await PluralitySocialConnect.getBlockNumberPromise()) as GetBlockNumberDataType;
+    const getBlockNumber = async (rpc: string, chainId: string) => {
+        const response = (await PluralitySocialConnect.getBlockNumberPromise(rpc, chainId)) as GetBlockNumberDataType;
         if (response) {
             const blockNumber = response.data;
             alert(`Block Number: ${blockNumber}`)
@@ -42,8 +42,8 @@ const SecondPage = () => {
         }
     }
 
-    const getTransactionCount = async (address: string) => {
-        const response = (await PluralitySocialConnect.getTransactionCountPromise(address)) as GetTransactionCountDataType;
+    const getTransactionCount = async (address: string, rpc: string, chainId: string) => {
+        const response = (await PluralitySocialConnect.getTransactionCountPromise(address, rpc, chainId)) as GetTransactionCountDataType;
         if (response) {
             const transactionCount = response.data;
             alert(`Transaction Count: ${transactionCount}`)
@@ -70,24 +70,24 @@ const SecondPage = () => {
         }
     }
 
-    const switchNetwork = async (rpc: string, chainId: string) => {
-        const response = (await PluralitySocialConnect.switchNetwork(rpc, chainId)) as SwitchNetworkDataType;
-        if (response) {
-            const switchNetwork = response.data;
-            alert(`${switchNetwork}`)
-            return switchNetwork;
-        }
-    }
+    // const switchNetwork = async (rpc: string, chainId: string) => {
+    //     const response = (await PluralitySocialConnect.switchNetwork(rpc, chainId)) as SwitchNetworkDataType;
+    //     if (response) {
+    //         const switchNetwork = response.data;
+    //         alert(`${switchNetwork}`)
+    //         return switchNetwork;
+    //     }
+    // }
 
     
-    const fetchNetwork = async () => {
-        const response = (await PluralitySocialConnect.fetchNetwork()) as SwitchNetworkDataType;
-        if (response) {
-            const network = response.data;
-            alert(`The fetched netwrok is: ${network}`)
-            return network;
-        }
-    }
+    // const fetchNetwork = async () => {
+    //     const response = (await PluralitySocialConnect.fetchNetwork()) as SwitchNetworkDataType;
+    //     if (response) {
+    //         const network = response.data;
+    //         alert(`The fetched netwrok is: ${network}`)
+    //         return network;
+    //     }
+    // }
 
     return (
 
@@ -102,14 +102,14 @@ const SecondPage = () => {
                 gap: "8px",
                 marginTop: "30px"
             }}>
-                <button onClick={() => getBalance()}>Get Balance</button>
-                <button onClick={() => getBlockNumber()}>Get Block Number</button>
-                <button onClick={() => sendTransaction(rawTx)}>Send Transaction</button>
-                <button onClick={() => getTransactionCount("0xe613B4cd69Fe20E8bd0F0D79a264210886bA1AA2")}>Get Transaction count</button>
-                <button onClick={() => readFromContract("0x8E26aa0b6c7A396C92237C6a87cCD6271F67f937", abi, "retrieve", "", "", "")}>Read Contract</button>
-                <button onClick={() => writeToContract("0x8E26aa0b6c7A396C92237C6a87cCD6271F67f937", abi, "store", txParams, "", "", txOptions)}>Write Contract</button>
-                <button onClick={() => switchNetwork( "https://ethereum-sepolia.rpc.subquery.network/public", "11155111")}>Switch to Sepolia</button>
-                <button onClick={() => fetchNetwork()}>Fetch the current network</button>
+                <button onClick={() => getBalance("https://ethereum-sepolia.rpc.subquery.network/public", "11155111")}>Get Balance</button>
+                <button onClick={() => getBlockNumber("https://ethereum-sepolia.rpc.subquery.network/public", "11155111")}>Get Block Number</button>
+                <button onClick={() => sendTransaction(rawTx, "https://ethereum-sepolia.rpc.subquery.network/public", "11155111")}>Send Transaction</button>
+                <button onClick={() => getTransactionCount("0xe613B4cd69Fe20E8bd0F0D79a264210886bA1AA2", "https://ethereum-sepolia.rpc.subquery.network/public", "11155111")}>Get Transaction count</button>
+                <button onClick={() => readFromContract("0x8E26aa0b6c7A396C92237C6a87cCD6271F67f937", abi, "retrieve", "", "https://ethereum-sepolia.rpc.subquery.network/public", "11155111")}>Read Contract</button>
+                <button onClick={() => writeToContract("0x8E26aa0b6c7A396C92237C6a87cCD6271F67f937", abi, "store", txParams, "https://ethereum-sepolia.rpc.subquery.network/public", "11155111", txOptions)}>Write Contract</button>
+                {/* <button onClick={() => switchNetwork( "https://ethereum-sepolia.rpc.subquery.network/public", "11155111")}>Switch to Sepolia</button>
+                <button onClick={() => fetchNetwork()}>Fetch the current network</button> */}
             </div>
 
         </div>

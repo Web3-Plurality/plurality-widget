@@ -130,17 +130,17 @@ class PluralitySocialConnect extends Component<PluralitySocialConnectProps, Plur
         return true;
     };
 
-    static getAllAccountsPromise = async () => {
+    static getAllAccountsPromise = async (rpc: string = '', chainId: string = '') => {
         if (!this.checkLitConnection()) return;
         return PluralityApi.sendRequest("getAllAccounts");
     }
 
-    static getConnectedAccountPromise = async () => {
+    static getConnectedAccountPromise = async (rpc: string = '', chainId: string = '') => {
         if (!this.checkLitConnection()) return;
         return await PluralityApi.sendRequest("getConnectedAccount");
     }
 
-    static getBalancePromise = () => {
+    static getBalancePromise = (rpc: string = '', chainId: string = '') => {
         if (!this.checkLitConnection()) return;
         return PluralityApi.sendRequest("getBalance");
     }
@@ -155,19 +155,19 @@ class PluralitySocialConnect extends Component<PluralitySocialConnectProps, Plur
         return PluralityApi.sendRequest("verifyMessageSignature", plainMessage, signedMessage);
     }
 
-    static sendTransactionPromise = (rawTx: string) => {
+    static sendTransactionPromise = (rawTx: string, rpc: string = '', chainId: string = '') => {
         if (!this.checkLitConnection()) return;
-        return PluralityApi.sendRequest("sendTransaction", rawTx);
+        return PluralityApi.sendRequest("sendTransaction", rawTx, rpc, chainId);
     }
 
-    static getBlockNumberPromise = () => {
+    static getBlockNumberPromise = (rpc: string = '', chainId: string = '') => {
         if (!this.checkLitConnection()) return;
         return PluralityApi.sendRequest("getBlockNumber");
     }
 
-    static getTransactionCountPromise = (address: string) => {
+    static getTransactionCountPromise = (address: string, rpc: string = '', chainId: string = '') => {
         if (!this.checkLitConnection()) return;
-        return PluralityApi.sendRequest("getTransactionCount", address);
+        return PluralityApi.sendRequest("getTransactionCount", address, rpc, chainId);
     }
 
     static readFromContractPromise = (address: string, abi: string, methodName: string, methodParams: string, rpc: string = '', chainId: string = '') => {
@@ -180,15 +180,15 @@ class PluralitySocialConnect extends Component<PluralitySocialConnectProps, Plur
         return PluralityApi.sendRequest("writeToContract", address, abi, methodName, methodParams, rpc, chainId, options);
     }
 
-    static switchNetwork = (rpc: string, chainId: string) => {
-        if (!this.checkLitConnection()) return;
-        return PluralityApi.sendRequest("switchNetwork", rpc, chainId);
-    }
+    // static switchNetwork = (rpc: string, chainId: string) => {
+    //     if (!this.checkLitConnection()) return;
+    //     return PluralityApi.sendRequest("switchNetwork", rpc, chainId);
+    // }
     
-    static fetchNetwork = () => {
-        if (!this.checkLitConnection()) return;
-        return PluralityApi.sendRequest("fetchNetwork");
-    }
+    // static fetchNetwork = () => {
+    //     if (!this.checkLitConnection()) return;
+    //     return PluralityApi.sendRequest("fetchNetwork");
+    // }
 
     sleep = (ms: number) => {
         return new Promise(resolve => setTimeout(resolve, ms));
