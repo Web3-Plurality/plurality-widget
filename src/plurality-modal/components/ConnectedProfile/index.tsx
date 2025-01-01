@@ -154,19 +154,8 @@ const ProfileConnectedButton = ({ theme, userData, handleClick }: { theme: strin
       <Menu.Item key="2" style={{ marginTop: '10px' }} onClick={() => goToProfile('profile')}>
         <span>Profile</span>
       </Menu.Item>
-      <Menu.Item key="3" style={{ marginTop: '10px' }} disabled>
-        <span style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: 'lightgray !important' }}>
-          Wallet
-          <span style={{
-            backgroundColor: 'lightYellow',
-            borderRadius: '12px',
-            padding: '0.2rem 0.5rem',
-            fontSize: '12px',
-            color: 'black',
-          }}>
-            Coming Soon
-          </span>
-        </span>
+      <Menu.Item key="3" style={{ marginTop: '10px' }} onClick={() => goToProfile('wallet')}>
+        <span>Wallet</span>
       </Menu.Item>
       <Menu.Item key="4" style={{ marginTop: '10px', marginBottom: '10px' }} onClick={() => goToProfile('profileSettings')}>
         <span>Settings</span>
