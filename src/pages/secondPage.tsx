@@ -10,7 +10,7 @@ const SecondPage = () => {
     const rawTx = JSON.stringify({
         to: "0xe613B4cd69Fe20E8bd0F0D79a264210886bA1AA2",
         value: "10000000000000000", //ethers.parseEther("0.01") but keep in string
-        gasLimit: 21000,
+        gasLimit: "21000", // we need bigInt, so keep it in string
         gasPrice: "50000000000", //ethers.parseUnits("50", "gwei") but keep in string
     })
     const txParams = JSON.stringify([8])
