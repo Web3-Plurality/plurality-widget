@@ -107,7 +107,7 @@ const baseUrl = process.env.REACT_APP_WIDGET_BASE_URL || '*'
 const ProfileConnectedButton = ({ theme, userData, handleClick }: { theme: string, userData: User, handleClick: () => void }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
-  const { profileIcon: icon, username: name, ratings, consent } = userData
+  const { profileIcon: icon, username: name, ratings } = userData
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
@@ -151,7 +151,7 @@ const ProfileConnectedButton = ({ theme, userData, handleClick }: { theme: strin
         </div>
       </Menu.Item>
       <hr />
-      <Menu.Item key="2" style={{ marginTop: '10px' }} onClick={() => goToProfile('profile')} disabled={!consent}>
+      <Menu.Item key="2" style={{ marginTop: '10px' }} onClick={() => goToProfile('profile')}>
         <span>Profile</span>
       </Menu.Item>
       <Menu.Item key="3" style={{ marginTop: '10px' }} disabled>
