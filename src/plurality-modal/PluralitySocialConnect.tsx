@@ -178,6 +178,23 @@ export class PluralitySocialConnect extends Component<PluralitySocialConnectProp
         if (!this.checkLitConnection()) return;
         return PluralityApi.sendRequest("writeToContract", address, abi, methodName, methodParams, rpc, chainId, options);
     }
+    // EAS Immplementation
+    static setPublicDataPromise = (key: string, value: string) => {
+        if (!this.checkLitConnection()) return;
+        return PluralityApi.sendRequest("setPublicData", key, value);
+    }
+    static getPublicDataPromise = (key: string) => {
+        if (!this.checkLitConnection()) return;
+        return PluralityApi.sendRequest("getPublicData", key);
+    }
+    static setPrivateDataPromise = (key: string, value: string) => {
+        if (!this.checkLitConnection()) return;
+        return PluralityApi.sendRequest("setPrivateData", key, value);
+    }
+    static getPrivateDataPromise = (key: string) => {
+        if (!this.checkLitConnection()) return;
+        return PluralityApi.sendRequest("getPrivateData", key);
+    }
 
     // static switchNetwork = (rpc: string, chainId: string) => {
     //     if (!this.checkLitConnection()) return;
