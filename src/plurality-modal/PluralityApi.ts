@@ -12,7 +12,7 @@ import {
     ReceiverPayload,
     RpcPayload,
     TxOptionsPayload
-} from "./types";
+} from "./types/payloadTypes";
 
 const baseUrl = process.env.REACT_APP_WIDGET_BASE_URL || '*'
 

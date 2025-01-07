@@ -3,6 +3,7 @@
   "version": "2.9.1",
   "description": "A React component for social connect popup.",
   "main": "./lib/PluralitySocialConnect.js",
+  "types": "./lib/index.d.ts",
   "keywords": [
     "web3",
     "plurality",
@@ -28,6 +29,7 @@
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "@plurality-network/smart-profile-wallet": ".",
     "antd": "^5.17.0",
     "ethers": "^6.12.1",
     "react": "^18.2.0",
@@ -41,8 +43,9 @@
   },
   "scripts": {
     "start": "set PORT=3001 && react-scripts start",
-    "build": "react-scripts build",
+    "build": "tsc",
     "webpack": "webpack",
+    "package": "npm run build && npm run webpack",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "prepare": "husky install"

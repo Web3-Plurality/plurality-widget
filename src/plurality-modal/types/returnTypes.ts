@@ -1,3 +1,6 @@
+export { default as PluralitySocialConnect } from '../PluralitySocialConnect';
+
+
 export interface GlobalDataResponse {
     id: string
     eventName: string

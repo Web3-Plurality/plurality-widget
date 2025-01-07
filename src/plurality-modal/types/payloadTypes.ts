@@ -54,7 +54,7 @@ export interface ChainIdPayload extends MessagePayload {
 }
 
 export interface TxOptionsPayload extends MessagePayload {
-    options
+    options: string
 }
 
 export type Payload = BasePayload | MessagePayload | MessageSignaturePayload;

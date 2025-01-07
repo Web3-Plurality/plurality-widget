@@ -4,16 +4,14 @@ const dotenv = require('dotenv');
 
 const env = dotenv.config().parsed;
 
-
 const envKeys = Object.keys(env).reduce((prev, next) => {
   prev[`process.env.${next}`] = JSON.stringify(env[next]);
   return prev;
 }, {});
 
-
 module.exports = {
   mode: 'production',
-  entry: './src/plurality-modal/PluralitySocialConnect.tsx',
+  entry: './src/plurality-modal',
   output: {
     path: path.resolve('lib'),
     filename: 'PluralitySocialConnect.js',
@@ -24,12 +22,23 @@ module.exports = {
       // JavaScript and TypeScript rules
       {
         test: /\.tsx?$/,
-        exclude: /(node_modules)/,
-        use: 'ts-loader',
+        exclude: [
+          /(node_modules)/, // Exclude node_modules
+          path.resolve(__dirname, 'src/pages') // Exclude the src/pages folder
+        ],
+        use: {
+          loader: 'ts-loader',
+          options: {
+            transpileOnly: true // Skip type-checking, `tsc` handles that
+          }
+        }
       },
       {
         test: /\.js?$/,
-        exclude: /(node_modules)/,
+        exclude: [
+          /(node_modules)/, // Exclude node_modules
+          path.resolve(__dirname, 'src/pages') // Exclude the src/pages folder
+        ],
         use: 'babel-loader',
       },
       // CSS files

@@ -1,8 +1,7 @@
-import React from 'react'
-import PluralitySocialConnect from './../plurality-modal/PluralitySocialConnect'
+import React, { useState } from 'react'
+import PluralitySocialConnect from '@plurality-network/smart-profile-wallet'
 //import PluralitySocialConnect from 'plurality-social-connect'
-import { AllAccountsDataType, ConnectedAccountDataType, SignMessageDataType, VerifySignedMessageDataType } from '../types';
-
+import { AllAccountsDataType, ConnectedAccountDataType, SignMessageDataType, VerifySignedMessageDataType } from '@plurality-network/smart-profile-wallet'
 const Home = () => {
     const options = { apps: "example", cliendId: '', theme: 'light' };
 

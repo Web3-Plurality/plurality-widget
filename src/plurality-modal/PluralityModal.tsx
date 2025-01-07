@@ -1,8 +1,17 @@
 import React from 'react';
 import { Modal } from 'antd';
-import './modalBackground.css'
+import './css/modalBackground.css'
 
-const PluralityModal = ({ isOpen, showMask, closePlurality, frameUrl, style }) => {
+interface PluralityModalTypes {
+    isOpen: boolean
+    showMask: boolean
+    closePlurality: () => void
+    frameUrl: string | undefined
+    style: any
+
+}
+
+const PluralityModal = ({ isOpen, showMask, closePlurality, frameUrl, style }: PluralityModalTypes) => {
 
     const handleOk = () => {
         closePlurality()

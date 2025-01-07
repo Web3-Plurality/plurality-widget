@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import './styles.css'
+import './css/styles.css'
 
 import PluralityModal from './PluralityModal';
 import PluralityApi from './PluralityApi'
