@@ -69,9 +69,13 @@ interface Scores {
     scoreValue: number
 }
 export interface User {
-    username: string;
-    profileIcon: string;
-    ratings: number;
+    username?: string;
+    user?: string;
+    name?: string;
+    avatar?: string;
+    profileIcon?: string;
+    ratings?: number;
+    rating?: number;
     scores: Scores[]
     consent: boolean
 }

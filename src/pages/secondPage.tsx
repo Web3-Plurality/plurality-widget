@@ -4,7 +4,8 @@ import { GetBalanceDataType, GetBlockNumberDataType, GetTransactionCountDataType
 import { ethers } from 'ethers';
 
 const SecondPage = () => {
-    const options = { apps: "example", clientId: 'c4034665-9aa0-4e00-91fb-7485477166dc', theme: 'dark' };
+    // const options = { apps: "example", clientId: 'c4034665-9aa0-4e00-91fb-7485477166dc', theme: 'dark' };
+    const options = { apps: "example", cliendId: '', theme: 'light' };
     const abi = '[{"inputs":[],"name":"retrieve","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"num","type":"uint256"}],"name":"store","outputs":[],"stateMutability":"nonpayable","type":"function"}]';
     const rawTx = JSON.stringify({
         to: "0xe613B4cd69Fe20E8bd0F0D79a264210886bA1AA2",
@@ -13,7 +14,7 @@ const SecondPage = () => {
         gasPrice: "50000000000", //ethers.parseUnits("50", "gwei") but keep in string
     })
     const txParams = JSON.stringify([8])
-    const txOptions = JSON.stringify({gasLimit: 2000000})
+    const txOptions = JSON.stringify({ gasLimit: 2000000 })
     const getBalance = async (rpc: string, chainId: string) => {
         const response = (await PluralitySocialConnect.getBalancePromise(rpc, chainId)) as GetBalanceDataType;
         if (response) {
@@ -22,9 +23,9 @@ const SecondPage = () => {
             return getBalance;
         }
     }
-
     const sendTransaction = async (rawTx: string, rpc: string, chainId: string) => {
         const response = (await PluralitySocialConnect.sendTransactionPromise(rawTx, rpc, chainId)) as SendTransactionDataType;
+        console.log("Res", response)
         if (response) {
             const sendTransactionData = response.data;
             alert(`Send Transaction Response: ${sendTransactionData}`)
@@ -78,7 +79,7 @@ const SecondPage = () => {
     //     }
     // }
 
-    
+
     // const fetchNetwork = async () => {
     //     const response = (await PluralitySocialConnect.fetchNetwork()) as SwitchNetworkDataType;
     //     if (response) {

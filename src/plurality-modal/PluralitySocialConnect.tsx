@@ -5,7 +5,7 @@ import PluralityModal from './PluralityModal';
 import PluralityApi from './PluralityApi'
 import ProfileConnectedButton from './components/ConnectedProfile';
 import ProfileButton from './components/profileButton';
-import { User } from './types';
+import { User } from './types/payloadTypes';
 
 
 const baseUrl = process.env.REACT_APP_WIDGET_BASE_URL
@@ -165,6 +165,9 @@ export class PluralitySocialConnect extends Component<PluralitySocialConnectProp
 
     static sendTransactionPromise = (rawTx: string, rpc: string = '', chainId: string = '') => {
         if (!this.checkLitConnection()) return;
+        if (this.instance) {
+            this.openSocialConnectPopup()
+        }
         return PluralityApi.sendRequest("sendTransaction", rawTx, rpc, chainId);
     }
 
@@ -233,7 +236,7 @@ export class PluralitySocialConnect extends Component<PluralitySocialConnectProp
     }
 
     handleIframeMessage = (event: MessageEvent) => {
-        const baseUrl = this.getBaseUrl(); // Get baseUrl from prop or environment variable
+        const baseUrl = this.getBaseUrl();
         if (event.origin !== baseUrl) return;
         const { eventName, data } = event.data;
         if (eventName === "metamaskConnection") {

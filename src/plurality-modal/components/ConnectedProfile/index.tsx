@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import ProfileIcon from '../../assets/profileIcon';
 import { CaretDownOutlined, CaretUpOutlined } from '@ant-design/icons';
 import ProfileStars from '../../assets/profileStar';
-import { User } from '../../types';
+import { User } from './../../types/payloadTypes';
 
 const ConnectedButtonWrapper = styled(Button) <{ $isOpen: boolean, $theme: string }>`
   width: 180px;
@@ -135,7 +135,7 @@ const ProfileConnectedButton = ({ theme, userData, handleClick }: { theme: strin
   }
 
   const renderRatings = () => {
-    return Array.from({ length: ratings }, (_, i) => <ProfileStars />);
+    return Array.from({ length: ratings || 0 }, (_, i) => <ProfileStars key={i} />);
   }
 
   const menu = (
