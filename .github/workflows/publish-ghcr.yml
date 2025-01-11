@@ -27,7 +27,12 @@ jobs:
           node-version: 20
 
       - name: Install dependencies
-        run: npm install --legacy-peer-deps
+        run: npm install
+      
+      - name: Prepare Environment files
+        run: |
+          rm -f .env
+          cp .env.production.example .env
 
       - name: Create .npmrc for NPM authentication
         run: echo "@plurality-network:registry=https://registry.npmjs.org/" > .npmrc && echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" >> .npmrc

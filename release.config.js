@@ -6,7 +6,7 @@ module.exports = {
     '@semantic-release/npm',
     [
       '@semantic-release/exec', {
-        'prepareCmd': 'npm run build'
+        'prepareCmd': 'npm run package'
       }      
     ],
     '@semantic-release/git',
