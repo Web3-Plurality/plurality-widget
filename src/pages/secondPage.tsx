@@ -1,7 +1,6 @@
 import React from 'react'
-import PluralitySocialConnect from '@plurality-network/smart-profile-wallet'
-//import PluralitySocialConnect from 'plurality-social-connect'
-import { GetBalanceDataType, GetBlockNumberDataType, GetTransactionCountDataType, ReadFromContractDataType, SendTransactionDataType, SwitchNetworkDataType, WriteToContractDataType } from '@plurality-network/smart-profile-wallet';
+import { PluralitySocialConnect } from '../plurality-modal'
+import { GetBalanceDataType, GetBlockNumberDataType, GetTransactionCountDataType, ReadFromContractDataType, SendTransactionDataType, SwitchNetworkDataType, WriteToContractDataType } from '../plurality-modal';
 import { ethers } from 'ethers';
 
 const SecondPage = () => {

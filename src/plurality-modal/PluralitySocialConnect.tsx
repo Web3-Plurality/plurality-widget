@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-
 import './css/styles.css'
 
 import PluralityModal from './PluralityModal';
@@ -43,7 +42,7 @@ interface PluralitySocialConnectState {
 
 const shouldDisableButton: boolean = false;
 
-class PluralitySocialConnect extends Component<PluralitySocialConnectProps, PluralitySocialConnectState> {
+export class PluralitySocialConnect extends Component<PluralitySocialConnectProps, PluralitySocialConnectState> {
 
     constructor(props: PluralitySocialConnectProps) {
         super(props);
@@ -268,5 +267,3 @@ class PluralitySocialConnect extends Component<PluralitySocialConnectProps, Plur
         );
     }
 }
-
-export default PluralitySocialConnect;
