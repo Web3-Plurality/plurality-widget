@@ -1,4 +1,4 @@
-export { default as PluralitySocialConnect } from '../PluralitySocialConnect';
+export { PluralitySocialConnect } from '../PluralitySocialConnect';
 
 
 export interface GlobalDataResponse {

@@ -13,8 +13,8 @@ module.exports = {
   mode: 'production',
   entry: './src/plurality-modal',
   output: {
-    path: path.resolve('lib'),
-    filename: 'PluralitySocialConnect.js',
+    path: path.resolve('dist'),
+    filename: 'index.js',
     libraryTarget: 'commonjs2',
   },
   module: {

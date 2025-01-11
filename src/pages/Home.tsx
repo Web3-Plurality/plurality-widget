@@ -1,10 +1,9 @@
 import React, { useState } from 'react'
-import PluralitySocialConnect from '@plurality-network/smart-profile-wallet'
-//import PluralitySocialConnect from 'plurality-social-connect'
-import { AllAccountsDataType, ConnectedAccountDataType, SignMessageDataType, VerifySignedMessageDataType } from '@plurality-network/smart-profile-wallet'
+import { PluralitySocialConnect } from '../plurality-modal'
+import { AllAccountsDataType, ConnectedAccountDataType, SignMessageDataType, VerifySignedMessageDataType } from '../plurality-modal'
 const Home = () => {
     const options = { apps: "example", cliendId: '', theme: 'light' };
-
+    
     const getAllAccounts = async () => {
         const response = (await PluralitySocialConnect.getAllAccountsPromise()) as AllAccountsDataType;
         if (response) {
