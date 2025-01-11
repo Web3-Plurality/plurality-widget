@@ -16,9 +16,6 @@ jobs:
           git config --global user.email "plurality.web3@gmail.com"
           git config --global user.name "semantic-release-bot"
 
-      - name: Docker Login
-        run: docker login --username ${{ secrets.GHCR_USERNAME }} --password ${{ secrets.GHCR_TOKEN }} ghcr.io
-
       - name: Checkout code
         uses: actions/checkout@v2
         with:
@@ -31,12 +28,12 @@ jobs:
 
       - name: Install dependencies
         run: npm install --legacy-peer-deps
-      
-      - name: Prepare Environment files
-        run: |
-          cp .env.staging.example .env
+
+      - name: Create .npmrc for NPM authentication
+        run: echo "@plurality-network:registry=https://registry.npmjs.org/" > .npmrc && echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" >> .npmrc
 
       - name: Semantic Release
         run: npx semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.GHCR_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
