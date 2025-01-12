@@ -3,6 +3,7 @@ import {
     AddressPayload,
     AmountPayload,
     ChainIdPayload,
+    DataPayload,
     MessagePayload,
     MessageSignaturePayload,
     MethodNamePayload,
@@ -41,7 +42,6 @@ class PluralityApi {
             const iframe = document.getElementById('iframe') as HTMLIFrameElement;
             if (iframe?.contentWindow) {
                 const payload: Payload = { id: messageId, type: 'metamaskRequest', method: eventName, isWidgetOpen: isOpen || 'false' };
-
                 if (args.length > 0) {
                     if (eventName === 'sendTransaction') (payload as RawTransactionPayload).raw_transaction = args[0];
                     else if (eventName === 'getTransactionCount') (payload as AddressPayload).address = args[0]
@@ -50,6 +50,10 @@ class PluralityApi {
                     else if (eventName === 'getBalance') (payload as RpcPayload).rpc = args[0]
                     else if (eventName === 'getBlockNumber') (payload as RpcPayload).rpc = args[0]
                     else if (eventName === 'switchNetwork') (payload as RpcPayload).rpc = args[0]
+                    else if (eventName === 'getPublicData') (payload as DataPayload).key = args[0]
+                    else if (eventName === 'setPublicData') (payload as DataPayload).key = args[0]
+                    else if (eventName === 'getPrivateData') (payload as DataPayload).key = args[0]
+                    else if (eventName === 'setPrivateData') (payload as DataPayload).key = args[0]
                     else (payload as MessagePayload).message = args[0];
                 }
                 if (args.length > 1) {
@@ -60,6 +64,8 @@ class PluralityApi {
                     else if (eventName === 'getBlockNumber') (payload as ChainIdPayload).chain_id = args[1]
                     else if (eventName === 'sendTransaction') (payload as RpcPayload).rpc  = args[1]
                     else if (eventName === 'getTransactionCount') (payload as RpcPayload).rpc  = args[1]
+                    else if (eventName === 'setPublicData') (payload as DataPayload).value = args[1]
+                    else if (eventName === 'setPrivateData') (payload as DataPayload).value = args[1]
                     else (payload as MessageSignaturePayload).signature = args[1];
                 }
                 if (args.length > 2) {

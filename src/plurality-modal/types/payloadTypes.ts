@@ -9,6 +9,11 @@ export interface MessagePayload extends BasePayload {
     message: string;
 }
 
+export interface DataPayload extends BasePayload {
+    key: string;
+    value: string;
+}
+
 export interface ReceiverPayload extends BasePayload {
     sendTo: string;
 }

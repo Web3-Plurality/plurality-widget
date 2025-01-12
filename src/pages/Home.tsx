@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { PluralitySocialConnect } from '../plurality-modal'
 import { AllAccountsDataType, ConnectedAccountDataType, SignMessageDataType, VerifySignedMessageDataType } from '../plurality-modal'
 const Home = () => {
+    // const [publicInput, setPublicInput] = useState("")
     const options = { apps: "example", cliendId: '', theme: 'light' };
     
     const getAllAccounts = async () => {
@@ -40,6 +41,48 @@ const Home = () => {
         }
     }
 
+    const getPublicData = async () => {
+        const response = (await PluralitySocialConnect.getPublicDataPromise("name")) as ConnectedAccountDataType;
+        if (response) {
+            // const connectedAccount = response.data;
+            console.log("response",response.data)
+            // alert(`Connected Account: ${response.data}`)
+            // return connectedAccount?.address;
+        }
+    }
+
+    const setPublicData = async () => {
+        const response = (await PluralitySocialConnect.setPublicDataPromise("name","plural-abc")) as ConnectedAccountDataType;
+        if (response) {
+            // const connectedAccount = response.data;
+            console.log("response",response.data)
+            // alert(`Connected Account: ${response.data}`)
+            // return connectedAccount?.address;
+        }
+    }
+
+    const getPrivateData = async () => {
+        const response = (await PluralitySocialConnect.getPrivateDataPromise("work")) as ConnectedAccountDataType;
+        if (response) {
+            // const connectedAccount = response.data;
+            console.log("response",response.data)
+            // alert(`Connected Account: ${response.data}`)
+            // return connectedAccount?.address;
+        }
+    }
+
+    const setPrivateData = async () => {
+        const response = (await PluralitySocialConnect.setPrivateDataPromise("work","Plurality")) as ConnectedAccountDataType;
+        if (response) {
+            // const connectedAccount = response.data;
+            console.log("response",response.data)
+            // alert(`Connected Account: ${response.data}`)
+            // return connectedAccount?.address;
+        }
+    }
+
+
+
     return (
 
         <div style={{
@@ -57,9 +100,12 @@ const Home = () => {
                 <button onClick={() => getConnectedAccount()}>Get Connected Account</button>
                 <button onClick={() => getMessageSignature("Example `personal_sign` message.")}>Sign Message</button>
                 <button onClick={() => getVerifyMessageData("Example `personal_sign` message.", "0x4b0a58d64ef2a4a5b6f60cf0b5f7decfec842e1bca35fba261660770d997297a66dad78ba2b2bd273f7de8130178bc93ddd44be3bafe1a94a8fd81a16a89cb0e1c")}>Verify Message</button>
-
+                <button onClick={() => getPublicData()}>Get Public Data</button>
+                <button onClick={() => setPublicData()}>Set Public Data</button>
+                <button onClick={() => getPrivateData()}>Get Private Data</button>
+                <button onClick={() => setPrivateData()}>Set Private Data</button>
             </div>
-
+{/* <input onChange={(e)=>{}}/> */}
         </div>
     )
 }
