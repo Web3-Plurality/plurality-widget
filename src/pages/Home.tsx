@@ -42,7 +42,7 @@ const Home = () => {
     }
 
     const getPublicData = async () => {
-        const response = (await PluralitySocialConnect.getPublicDataPromise("work")) as ConnectedAccountDataType;
+        const response = (await PluralitySocialConnect.getPublicDataPromise("name")) as ConnectedAccountDataType;
         if (response) {
             // const connectedAccount = response.data;
             console.log("response",response.data)
@@ -52,7 +52,7 @@ const Home = () => {
     }
 
     const setPublicData = async () => {
-        const response = (await PluralitySocialConnect.setPublicDataPromise("work","Plurality")) as ConnectedAccountDataType;
+        const response = (await PluralitySocialConnect.setPublicDataPromise("name","plural-abc")) as ConnectedAccountDataType;
         if (response) {
             // const connectedAccount = response.data;
             console.log("response",response.data)
@@ -104,12 +104,6 @@ const Home = () => {
                 <button onClick={() => setPublicData()}>Set Public Data</button>
                 <button onClick={() => getPrivateData()}>Get Private Data</button>
                 <button onClick={() => setPrivateData()}>Set Private Data</button>
-
-
-                {/* <input onChange={(e)=>{setPublicInput(e.target.value)}} /> */}
-                {/* <button onClick={() => getPublicData()}>Get Public Data</button>
-                <button onClick={() => getPublicData()}>Get Public Data</button> */}
-
             </div>
 {/* <input onChange={(e)=>{}}/> */}
         </div>
