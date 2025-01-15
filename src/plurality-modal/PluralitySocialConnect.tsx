@@ -6,12 +6,12 @@ import PluralityApi from './PluralityApi'
 import ProfileConnectedButton from './components/ConnectedProfile';
 import ProfileButton from './components/profileButton';
 import { User } from './types/payloadTypes';
+import { message } from 'antd';
 
 
 const baseUrl = process.env.REACT_APP_WIDGET_BASE_URL
 interface PluralitySocialConnectProps {
     options: {
-        apps: string;
         clientId?: string;
         theme: string
     };
@@ -135,22 +135,22 @@ export class PluralitySocialConnect extends Component<PluralitySocialConnectProp
         return true;
     };
 
-    static getAllAccountsPromise = async (rpc: string = '', chainId: string = '') => {
+    static getAllAccounts = async (rpc: string = '', chainId: string = '') => {
         if (!this.checkLitConnection()) return;
         return PluralityApi.sendRequest("getAllAccounts");
     }
 
-    static getConnectedAccountPromise = async (rpc: string = '', chainId: string = '') => {
+    static getConnectedAccount = async (rpc: string = '', chainId: string = '') => {
         if (!this.checkLitConnection()) return;
         return await PluralityApi.sendRequest("getConnectedAccount");
     }
 
-    static getBalancePromise = (rpc: string = '', chainId: string = '') => {
+    static getBalance = (rpc: string = '', chainId: string = '') => {
         if (!this.checkLitConnection()) return;
         return PluralityApi.sendRequest("getBalance");
     }
 
-    static getMessageSignaturePromise = (messageToSign: string) => {
+    static getMessageSignature = (messageToSign: string) => {
         if (!this.checkLitConnection()) return;
         if (this.instance) {
             this.instance.openSocialConnectPopup();
@@ -158,12 +158,12 @@ export class PluralitySocialConnect extends Component<PluralitySocialConnectProp
         return PluralityApi.sendRequest("getMessageSignature", messageToSign);
     }
 
-    static verifyMessageSignaturePromise = (plainMessage: string, signedMessage: string) => {
+    static verifyMessageSignature = (plainMessage: string, signedMessage: string) => {
         if (!this.checkLitConnection()) return;
         return PluralityApi.sendRequest("verifyMessageSignature", plainMessage, signedMessage);
     }
 
-    static sendTransactionPromise = (rawTx: string, rpc: string = '', chainId: string = '') => {
+    static sendTransaction = (rawTx: string, rpc: string = '', chainId: string = '') => {
         if (!this.checkLitConnection()) return;
         if (this.instance) {
             this.openSocialConnectPopup()
@@ -171,41 +171,51 @@ export class PluralitySocialConnect extends Component<PluralitySocialConnectProp
         return PluralityApi.sendRequest("sendTransaction", rawTx, rpc, chainId);
     }
 
-    static getBlockNumberPromise = (rpc: string = '', chainId: string = '') => {
+    static getBlockNumber = (rpc: string = '', chainId: string = '') => {
         if (!this.checkLitConnection()) return;
         return PluralityApi.sendRequest("getBlockNumber");
     }
 
-    static getTransactionCountPromise = (address: string, rpc: string = '', chainId: string = '') => {
+    static getTransactionCount = (address: string, rpc: string = '', chainId: string = '') => {
         if (!this.checkLitConnection()) return;
         return PluralityApi.sendRequest("getTransactionCount", address, rpc, chainId);
     }
 
-    static readFromContractPromise = (address: string, abi: string, methodName: string, methodParams: string, rpc: string = '', chainId: string = '') => {
+    static readFromContract = (address: string, abi: string, methodName: string, methodParams: string, rpc: string = '', chainId: string = '') => {
         if (!this.checkLitConnection()) return;
         return PluralityApi.sendRequest("readFromContract", address, abi, methodName, methodParams, rpc, chainId);
     }
 
-    static writeToContractPromise = (address: string, abi: string, methodName: string, methodParams: string, rpc: string = '', chainId: string = '', options: string) => {
+    static writeToContract = (address: string, abi: string, methodName: string, methodParams: string, rpc: string = '', chainId: string = '', options: string) => {
         if (!this.checkLitConnection()) return;
+        if (this.instance) {
+            this.instance.openSocialConnectPopup();
+        }
         return PluralityApi.sendRequest("writeToContract", address, abi, methodName, methodParams, rpc, chainId, options);
     }
     // EAS Immplementation
-    static setPublicDataPromise = (key: string, value: string) => {
+    static setPublicData = (key: string, value: string) => {
         if (!this.checkLitConnection()) return;
         return PluralityApi.sendRequest("setPublicData", key, value);
     }
-    static getPublicDataPromise = (key: string) => {
+    static getPublicData = (key: string) => {
         if (!this.checkLitConnection()) return;
         return PluralityApi.sendRequest("getPublicData", key);
     }
-    static setPrivateDataPromise = (key: string, value: string) => {
+    static setPrivateData = (key: string, value: string) => {
         if (!this.checkLitConnection()) return;
         return PluralityApi.sendRequest("setPrivateData", key, value);
     }
-    static getPrivateDataPromise = (key: string) => {
+    static getPrivateData = (key: string) => {
         if (!this.checkLitConnection()) return;
         return PluralityApi.sendRequest("getPrivateData", key);
+    }
+    static getSmartProfileData = () => {
+        if (!this.checkLitConnection()) return;
+        if (this.instance) {
+            this.instance.openSocialConnectPopup();
+        }
+        return PluralityApi.sendRequest("getSmartProfile");
     }
 
     // static switchNetwork = (rpc: string, chainId: string) => {
@@ -254,7 +264,6 @@ export class PluralitySocialConnect extends Component<PluralitySocialConnectProp
                 localStorage.setItem('lit', 'false')
             }
         } else if (eventName === "userData") {
-            console.log("User Data");
             this.setState((prevState) => ({
                 userData: {
                     ...prevState.userData,
@@ -265,10 +274,14 @@ export class PluralitySocialConnect extends Component<PluralitySocialConnectProp
                     ...(data.scores && { scores: data.scores })
                 }
             }));
+            localStorage.setItem('userData', JSON.stringify(data))
         } else if (eventName === "consentData" || eventName === "getMessageSignature") {
             if (data?.consent || eventName === "getMessageSignature") {
                 this.closeSocialConnectPopup();
             }
+        } else if (eventName === "walletSendTransaction") {
+            console.log("Wallet tsx", data)
+            message.error(data)
         }
 
         if (eventName === "smartProfileData") {
