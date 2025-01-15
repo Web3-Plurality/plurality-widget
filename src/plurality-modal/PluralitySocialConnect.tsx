@@ -5,12 +5,13 @@ import PluralityModal from './PluralityModal';
 import PluralityApi from './PluralityApi'
 import ProfileConnectedButton from './components/ConnectedProfile';
 import ProfileButton from './components/profileButton';
+import { User } from './types/payloadTypes';
+import { message } from 'antd';
 
 
 const baseUrl = process.env.REACT_APP_WIDGET_BASE_URL
 interface PluralitySocialConnectProps {
     options: {
-        apps: string;
         clientId?: string;
         theme: string
     };
@@ -22,12 +23,6 @@ interface PluralitySocialConnectProps {
         flipTextColor: string;
         width: string;
     };
-}
-
-interface User {
-    username: string;
-    profileIcon: string;
-    rating: number;
 }
 
 interface PluralitySocialConnectState {
@@ -44,8 +39,11 @@ const shouldDisableButton: boolean = false;
 
 export class PluralitySocialConnect extends Component<PluralitySocialConnectProps, PluralitySocialConnectState> {
 
+    private static instance: PluralitySocialConnect | null = null;
+
     constructor(props: PluralitySocialConnectProps) {
         super(props);
+        PluralitySocialConnect.instance = this;
 
         this.state = {
             iframeStyle: {
@@ -66,7 +64,9 @@ export class PluralitySocialConnect extends Component<PluralitySocialConnectProp
             userData: {
                 username: '',
                 profileIcon: '',
-                rating: 0
+                ratings: 0,
+                scores: [],
+                consent: false
             }
         };
     }
@@ -75,6 +75,12 @@ export class PluralitySocialConnect extends Component<PluralitySocialConnectProp
         if (!this.props.options.clientId) return baseUrl
         return `${baseUrl}/rsm?client_id=${this.props.options.clientId}`;
     }
+
+    static openSocialConnectPopup = () => {
+        if (this.instance) {
+            this.instance.openSocialConnectPopup();
+        }
+    };
 
     openSocialConnectPopup = () => {
         const targetOrigin = this.getBaseUrl() || '*';
@@ -129,78 +135,94 @@ export class PluralitySocialConnect extends Component<PluralitySocialConnectProp
         return true;
     };
 
-    static getAllAccountsPromise = async (rpc: string = '', chainId: string = '') => {
+    static getAllAccounts = async (rpc: string = '', chainId: string = '') => {
         if (!this.checkLitConnection()) return;
         return PluralityApi.sendRequest("getAllAccounts");
     }
 
-    static getConnectedAccountPromise = async (rpc: string = '', chainId: string = '') => {
+    static getConnectedAccount = async (rpc: string = '', chainId: string = '') => {
         if (!this.checkLitConnection()) return;
         return await PluralityApi.sendRequest("getConnectedAccount");
     }
 
-    static getBalancePromise = (rpc: string = '', chainId: string = '') => {
+    static getBalance = (rpc: string = '', chainId: string = '') => {
         if (!this.checkLitConnection()) return;
         return PluralityApi.sendRequest("getBalance");
     }
 
-    static getMessageSignaturePromise = (messageToSign: string) => {
+    static getMessageSignature = (messageToSign: string) => {
         if (!this.checkLitConnection()) return;
+        if (this.instance) {
+            this.instance.openSocialConnectPopup();
+        }
         return PluralityApi.sendRequest("getMessageSignature", messageToSign);
     }
 
-    static verifyMessageSignaturePromise = (plainMessage: string, signedMessage: string) => {
+    static verifyMessageSignature = (plainMessage: string, signedMessage: string) => {
         if (!this.checkLitConnection()) return;
         return PluralityApi.sendRequest("verifyMessageSignature", plainMessage, signedMessage);
     }
 
-    static sendTransactionPromise = (rawTx: string, rpc: string = '', chainId: string = '') => {
+    static sendTransaction = (rawTx: string, rpc: string = '', chainId: string = '') => {
         if (!this.checkLitConnection()) return;
+        if (this.instance) {
+            this.openSocialConnectPopup()
+        }
         return PluralityApi.sendRequest("sendTransaction", rawTx, rpc, chainId);
     }
 
-    static getBlockNumberPromise = (rpc: string = '', chainId: string = '') => {
+    static getBlockNumber = (rpc: string = '', chainId: string = '') => {
         if (!this.checkLitConnection()) return;
         return PluralityApi.sendRequest("getBlockNumber");
     }
 
-    static getTransactionCountPromise = (address: string, rpc: string = '', chainId: string = '') => {
+    static getTransactionCount = (address: string, rpc: string = '', chainId: string = '') => {
         if (!this.checkLitConnection()) return;
         return PluralityApi.sendRequest("getTransactionCount", address, rpc, chainId);
     }
 
-    static readFromContractPromise = (address: string, abi: string, methodName: string, methodParams: string, rpc: string = '', chainId: string = '') => {
+    static readFromContract = (address: string, abi: string, methodName: string, methodParams: string, rpc: string = '', chainId: string = '') => {
         if (!this.checkLitConnection()) return;
         return PluralityApi.sendRequest("readFromContract", address, abi, methodName, methodParams, rpc, chainId);
     }
 
-    static writeToContractPromise = (address: string, abi: string, methodName: string, methodParams: string, rpc: string = '', chainId: string = '', options: string) => {
+    static writeToContract = (address: string, abi: string, methodName: string, methodParams: string, rpc: string = '', chainId: string = '', options: string) => {
         if (!this.checkLitConnection()) return;
+        if (this.instance) {
+            this.instance.openSocialConnectPopup();
+        }
         return PluralityApi.sendRequest("writeToContract", address, abi, methodName, methodParams, rpc, chainId, options);
     }
     // EAS Immplementation
-    static setPublicDataPromise = (key: string, value: string) => {
+    static setPublicData = (key: string, value: string) => {
         if (!this.checkLitConnection()) return;
         return PluralityApi.sendRequest("setPublicData", key, value);
     }
-    static getPublicDataPromise = (key: string) => {
+    static getPublicData = (key: string) => {
         if (!this.checkLitConnection()) return;
         return PluralityApi.sendRequest("getPublicData", key);
     }
-    static setPrivateDataPromise = (key: string, value: string) => {
+    static setPrivateData = (key: string, value: string) => {
         if (!this.checkLitConnection()) return;
         return PluralityApi.sendRequest("setPrivateData", key, value);
     }
-    static getPrivateDataPromise = (key: string) => {
+    static getPrivateData = (key: string) => {
         if (!this.checkLitConnection()) return;
         return PluralityApi.sendRequest("getPrivateData", key);
+    }
+    static getSmartProfileData = () => {
+        if (!this.checkLitConnection()) return;
+        if (this.instance) {
+            this.instance.openSocialConnectPopup();
+        }
+        return PluralityApi.sendRequest("getSmartProfile");
     }
 
     // static switchNetwork = (rpc: string, chainId: string) => {
     //     if (!this.checkLitConnection()) return;
     //     return PluralityApi.sendRequest("switchNetwork", rpc, chainId);
     // }
-    
+
     // static fetchNetwork = () => {
     //     if (!this.checkLitConnection()) return;
     //     return PluralityApi.sendRequest("fetchNetwork");
@@ -224,9 +246,8 @@ export class PluralitySocialConnect extends Component<PluralitySocialConnectProp
     }
 
     handleIframeMessage = (event: MessageEvent) => {
-        const baseUrl = this.getBaseUrl(); // Get baseUrl from prop or environment variable
+        const baseUrl = this.getBaseUrl();
         if (event.origin !== baseUrl) return;
-        console.log("Event data: ", event.data)
         const { eventName, data } = event.data;
         if (eventName === "metamaskConnection") {
             this.setState({ isMetamaskConnected: data.isConnected })
@@ -236,7 +257,6 @@ export class PluralitySocialConnect extends Component<PluralitySocialConnectProp
                 localStorage.setItem('metamask', 'false')
             }
         } else if (eventName === "litConnection") {
-            console.log("Inside")
             this.setState({ isLitConnected: data.isConnected })
             if (data?.isConnected) {
                 localStorage.setItem('lit', 'true')
@@ -244,15 +264,24 @@ export class PluralitySocialConnect extends Component<PluralitySocialConnectProp
                 localStorage.setItem('lit', 'false')
             }
         } else if (eventName === "userData") {
-            console.log("User Data");
             this.setState((prevState) => ({
                 userData: {
                     ...prevState.userData,
                     username: data.name,
                     profileIcon: data.avatar,
-                    rating: data.rating
+                    ratings: data.rating,
+                    consent: data.consent,
+                    ...(data.scores && { scores: data.scores })
                 }
             }));
+            localStorage.setItem('userData', JSON.stringify(data))
+        } else if (eventName === "consentData" || eventName === "getMessageSignature") {
+            if (data?.consent || eventName === "getMessageSignature") {
+                this.closeSocialConnectPopup();
+            }
+        } else if (eventName === "walletSendTransaction") {
+            console.log("Wallet tsx", data)
+            message.error(data)
         }
 
         if (eventName === "smartProfileData") {
@@ -267,9 +296,8 @@ export class PluralitySocialConnect extends Component<PluralitySocialConnectProp
                     this.state.isMetamaskConnected || this.state.isLitConnected
                         ? <ProfileConnectedButton
                             theme={this.props.options.theme}
-                            icon={this.state.userData.profileIcon}
-                            name={this.state.userData.username}
-                            ratings={this.state.userData.rating}
+                            userData={this.state.userData}
+                            handleClick={this.openSocialConnectPopup}
                         />
                         : <ProfileButton handleClick={this.openSocialConnectPopup} />
                 }

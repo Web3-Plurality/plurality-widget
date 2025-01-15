@@ -4,13 +4,12 @@ import styled from 'styled-components';
 import ProfileIcon from '../../assets/profileIcon';
 import { CaretDownOutlined, CaretUpOutlined } from '@ant-design/icons';
 import ProfileStars from '../../assets/profileStar';
+import { User } from './../../types/payloadTypes';
 
 const ConnectedButtonWrapper = styled(Button) <{ $isOpen: boolean, $theme: string }>`
   width: 180px;
-  /* height: 50px; */
   border-radius: 70px;
   border: none;
-  /* background-color: #acacac !important; */
   background-color: ${props => (props.$theme === 'dark' ? '#000000 !important' : 'transparent !important')};
   color: #fff;
   box-sizing: border-box;
@@ -22,7 +21,6 @@ const ConnectedButtonWrapper = styled(Button) <{ $isOpen: boolean, $theme: strin
   transition: background-color 0.8s ease;
   overflow: hidden;
   padding: 25px 10px !important;
-  /* border: 1px solid gray; */
 
   .avatar {
     width: 46px;
@@ -32,24 +30,24 @@ const ConnectedButtonWrapper = styled(Button) <{ $isOpen: boolean, $theme: strin
     align-items: center;
     justify-content: center;
     cursor: pointer;
-}
+  }
 
-.avatar img {
+  .avatar img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     border-radius: 50%;
-}
+  }
 
-  .anticon-caret-down,  .anticon-caret-up {
+  .anticon-caret-down, .anticon-caret-up {
     color: lightgray !important;
   }
 
   &:hover {
     background-color: #acacac !important;
-    /* background-color: ${props => (props.$theme === 'dark' ? '#000000 !important' : '#ffffff !important')}; */
     color: #fff !important;
   }
+
   > svg:first-of-type {
     width: 50px;
     height: 60px;
@@ -65,12 +63,18 @@ const StyledMenu = styled(Menu) <{ $theme: string }>`
   span {
     color: #545454 !important;
   }
-    
+
   .ant-dropdown-menu-item {
     padding: 0 15px !important;
     font-family: 'Lexend';
     font-size: 16px;
     font-weight: 400;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: #F9F9F9 !important;
+      color: #000;
+    }
 
     .basic-info {
       display: flex;
@@ -92,8 +96,6 @@ const StyledMenu = styled(Menu) <{ $theme: string }>`
     }
   }
 
-
-
   @media (max-width: 768px) {
     width: 100%;
     max-width: 100;
@@ -102,8 +104,10 @@ const StyledMenu = styled(Menu) <{ $theme: string }>`
 
 const baseUrl = process.env.REACT_APP_WIDGET_BASE_URL || '*'
 
-const ProfileConnectedButton = ({ theme, name, icon, ratings }: { theme: string, name: string, icon: string, ratings: number }) => {
+const ProfileConnectedButton = ({ theme, userData, handleClick }: { theme: string, userData: User, handleClick: () => void }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  const { profileIcon: icon, username: name, ratings } = userData
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
@@ -120,8 +124,18 @@ const ProfileConnectedButton = ({ theme, name, icon, ratings }: { theme: string,
     }
   }
 
+  const goToProfile = (step: string) => {
+    const iframe = document.getElementById('iframe') as HTMLIFrameElement;
+    if (iframe?.contentWindow) {
+      const messageId = `msg-${Date.now()}`;
+      const payload = { id: messageId, type: 'goToStep', step };
+      iframe.contentWindow.postMessage(payload, baseUrl);
+    }
+    handleClick()
+  }
+
   const renderRatings = () => {
-    return Array.from({ length: ratings }, (_, i) => <ProfileStars />);
+    return Array.from({ length: ratings || 0 }, (_, i) => <ProfileStars key={i} />);
   }
 
   const menu = (
@@ -137,14 +151,14 @@ const ProfileConnectedButton = ({ theme, name, icon, ratings }: { theme: string,
         </div>
       </Menu.Item>
       <hr />
-      <Menu.Item key="2" style={{ marginTop: '10px' }}>
+      <Menu.Item key="2" style={{ marginTop: '10px' }} onClick={() => goToProfile('profile')}>
         <span>Profile</span>
       </Menu.Item>
-      <Menu.Item key="3" style={{ marginTop: '10px' }}>
+      <Menu.Item key="3" style={{ marginTop: '10px' }} onClick={() => goToProfile('wallet')}>
         <span>Wallet</span>
       </Menu.Item>
-      <Menu.Item key="4" style={{ marginTop: '10px', marginBottom: '10px' }}>
-        <span>Settings</span>
+      <Menu.Item key="4" style={{ marginTop: '10px', marginBottom: '10px' }} onClick={() => goToProfile('profileSettings')}>
+        <span>Update</span>
       </Menu.Item>
       <hr />
       <Menu.Item key="5" style={{ marginTop: '10px', marginBottom: '10px' }} onClick={handleLogout}>
